@@ -1,3529 +1,2821 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Solcito Mayu Play</title>
-
-  <style>
-    :root {
-      --bg: #07060a;
-      --bg2: #100b14;
-      --panel: #151019;
-      --panel2: #21152b;
-
-      --purple: #a96cff;
-      --purple2: #c69aff;
-      --purple3: #6f35ad;
-
-      --chrome: #e2e5e9;
-      --chrome2: #8b9098;
-
-      --white: #ffffff;
-      --text: #f7f2fc;
-      --muted: #aaa2b2;
-
-      --danger: #ff668f;
-      --success: #7dffc7;
-
-      --radius: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-
-      background:
-        radial-gradient(
-          circle at 50% -10%,
-          rgba(154, 82, 220, .40),
-          transparent 38%
-        ),
-        radial-gradient(
-          circle at 90% 30%,
-          rgba(92, 42, 130, .15),
-          transparent 35%
-        ),
-        var(--bg);
-
-      color: var(--text);
-
-      font-family:
-        "Segoe UI",
-        Arial,
-        Helvetica,
-        sans-serif;
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* =====================================================
-       LOGIN
-    ===================================================== */
-
-    #loginScreen {
-      min-height: 100vh;
-
-      display: grid;
-      place-items: center;
-
-      padding: 25px;
-    }
-
-    .login-card {
-      width: min(430px, 100%);
-
-      padding: 32px;
-
-      border: 2px solid var(--chrome);
-
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(39, 24, 50, .97),
-          rgba(9, 7, 12, .98)
-        );
-
-      box-shadow:
-        0 0 20px rgba(169,108,255,.18),
-        0 0 55px rgba(169,108,255,.10),
-        inset 0 0 20px rgba(255,255,255,.025);
-
-      animation: pulseBorder 3.5s infinite ease-in-out;
-    }
-
-    @keyframes pulseBorder {
-      0%,
-      100% {
-        box-shadow:
-          0 0 15px rgba(169,108,255,.15),
-          0 0 35px rgba(169,108,255,.06);
-      }
-
-      50% {
-        box-shadow:
-          0 0 22px rgba(169,108,255,.30),
-          0 0 60px rgba(169,108,255,.12);
-      }
-    }
-
-    .login-logo {
-      text-align: center;
-
-      font-size: 95px;
-
-      line-height: .9;
-
-      font-weight: 1000;
-
-      font-style: italic;
-
-      background:
-        linear-gradient(
-          145deg,
-          #ffffff 0%,
-          #bfc3c9 22%,
-          #565b63 48%,
-          #f9f9f9 65%,
-          #777d86 100%
-        );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-
-      color: transparent;
-
-      filter:
-        drop-shadow(0 0 8px rgba(169,108,255,.9))
-        drop-shadow(0 0 22px rgba(169,108,255,.25));
-    }
-
-    .brand {
-      text-align: center;
-
-      font-size: 31px;
-
-      font-weight: 950;
-
-      letter-spacing: -.7px;
-
-      background:
-        linear-gradient(
-          90deg,
-          #ffffff,
-          #d5b4ff,
-          #a15df2
-        );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-
-      color: transparent;
-    }
-
-    .login-subtitle {
-      text-align: center;
-
-      margin: 9px 0 25px;
-
-      color: var(--muted);
-
-      font-size: 11px;
-
-      letter-spacing: 1.3px;
-
-      font-weight: 800;
-    }
-
-    .field {
-      margin-bottom: 16px;
-    }
-
-    .field label {
-      display: block;
-
-      margin-bottom: 7px;
-
-      font-size: 11px;
-
-      font-weight: 950;
-
-      letter-spacing: .6px;
-
-      color: #eee8f5;
-    }
-
-    input,
-    select {
-      width: 100%;
-
-      padding: 13px 14px;
-
-      color: var(--white);
-
-      background: #08070b;
-
-      border: 1px solid #51465b;
-
-      border-radius: 10px;
-
-      outline: none;
-
-      transition: .2s;
-    }
-
-    input:focus,
-    select:focus {
-      border-color: var(--purple2);
-
-      box-shadow:
-        0 0 0 2px rgba(169,108,255,.10),
-        0 0 18px rgba(169,108,255,.13);
-    }
-
-    .login-error {
-      min-height: 18px;
-
-      margin-top: 9px;
-
-      color: #ff91b1;
-
-      font-size: 12px;
-
-      text-align: center;
-    }
-
-    /* =====================================================
-       GENERAL
-    ===================================================== */
-
-    .container {
-      width: min(1200px, 94%);
-
-      margin: auto;
-
-      padding:
-        22px 0 60px;
-    }
-
-    header {
-      display: flex;
-
-      align-items: center;
-
-      gap: 15px;
-
-      margin-bottom: 22px;
-    }
-
-    .header-s {
-      position: relative;
-
-      font-size: 68px;
-
-      line-height: .9;
-
-      font-weight: 1000;
-
-      font-style: italic;
-
-      background:
-        linear-gradient(
-          145deg,
-          #ffffff,
-          #adb2b9,
-          #3e4248,
-          #ffffff,
-          #777c84
-        );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-
-      color: transparent;
-
-      filter:
-        drop-shadow(0 0 7px rgba(169,108,255,.95))
-        drop-shadow(0 0 22px rgba(169,108,255,.25));
-    }
-
-    .header-title {
-      font-size: 32px;
-
-      font-weight: 950;
-
-      background:
-        linear-gradient(
-          90deg,
-          #fff,
-          #d5b5ff,
-          #9c5ce9
-        );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-
-      color: transparent;
-    }
-
-    .header-subtitle {
-      color: var(--muted);
-
-      font-size: 11px;
-
-      margin-top: 3px;
-    }
-
-    /* =====================================================
-       TABS
-    ===================================================== */
-
-    .tabs {
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      gap: 9px;
-
-      margin-bottom: 16px;
-    }
-
-    .tab {
-      min-height: 48px;
-
-      border-radius: 12px;
-
-      border: 2px solid #463b4f;
-
-      color: #ddd4e5;
-
-      background:
-        linear-gradient(
-          145deg,
-          #17101d,
-          #0c090e
-        );
-
-      font-weight: 950;
-
-      font-size: 11px;
-
-      transition: .25s;
-    }
-
-    .tab:hover {
-      border-color: #8561a4;
-
-      box-shadow:
-        0 0 15px rgba(169,108,255,.13);
-    }
-
-    .tab.active {
-      color: #fff;
-
-      border-color: var(--purple2);
-
-      background:
-        linear-gradient(
-          145deg,
-          #39204d,
-          #130c19
-        );
-
-      box-shadow:
-        0 0 17px rgba(169,108,255,.22);
-    }
-
-    /* =====================================================
-       SECTIONS
-    ===================================================== */
-
-    .section {
-      display: none;
-
-      position: relative;
-
-      padding: 23px;
-
-      border-radius: var(--radius);
-
-      border: 2px solid #756085;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(32,21,42,.97),
-          rgba(10,8,13,.98)
-        );
-
-      box-shadow:
-        0 0 22px rgba(169,108,255,.10),
-        inset 0 0 22px rgba(255,255,255,.018);
-
-      animation:
-        sectionPulse 4s infinite ease-in-out;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    @keyframes sectionPulse {
-      0%,
-      100% {
-        box-shadow:
-          0 0 17px rgba(169,108,255,.08),
-          inset 0 0 20px rgba(255,255,255,.015);
-      }
-
-      50% {
-        box-shadow:
-          0 0 25px rgba(169,108,255,.18),
-          inset 0 0 22px rgba(255,255,255,.025);
-      }
-    }
-
-    .section-title {
-      margin: 0 0 18px;
-
-      font-size: 22px;
-
-      font-weight: 950;
-
-      color: #fff;
-    }
-
-    .grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
-      gap: 14px;
-    }
-
-    .status {
-      padding: 11px 13px;
-
-      margin-bottom: 17px;
-
-      border-radius: 10px;
-
-      border: 1px solid #49404f;
-
-      background: #0c090f;
-
-      color: #bfb6c7;
-
-      font-size: 12px;
-
-      font-weight: 800;
-    }
-
-    .status.open {
-      color: var(--success);
-
-      border-color:
-        rgba(125,255,199,.35);
-    }
-
-    .status.closed {
-      color: #ff91b1;
-
-      border-color:
-        rgba(255,102,143,.35);
-    }
-
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
-
-    .btn {
-      border: 1px solid #665772;
-
-      border-radius: 10px;
-
-      padding: 11px 15px;
-
-      color: white;
-
-      background:
-        linear-gradient(
-          145deg,
-          #1b1321,
-          #0d0a10
-        );
-
-      font-weight: 900;
-
-      font-size: 12px;
-
-      transition: .2s;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-
-      border-color: var(--purple2);
-
-      box-shadow:
-        0 0 15px rgba(169,108,255,.17);
-    }
-
-    .btn-primary {
-      border-color: #c49bff;
-
-      background:
-        linear-gradient(
-          145deg,
-          #ad6cff,
-          #622f9d
-        );
-
-      box-shadow:
-        0 0 14px rgba(169,108,255,.18);
-    }
-
-    .btn-danger {
-      border-color: #9b405c;
-
-      background:
-        linear-gradient(
-          145deg,
-          #5a1d32,
-          #210d16
-        );
-    }
-
-    .btn-full {
-      width: 100%;
-    }
-
-    /* =====================================================
-       SUGGESTIONS
-    ===================================================== */
-
-    .suggestions {
-      margin-top: 4px;
-
-      overflow: hidden;
-
-      border:
-        1px solid #51455c;
-
-      border-radius: 9px;
-
-      background: #0d0a11;
-
-      position: relative;
-
-      z-index: 10;
-    }
-
-    .suggestion {
-      padding: 10px 12px;
-
-      cursor: pointer;
-
-      border-bottom:
-        1px solid #27212d;
-
-      font-size: 12px;
-    }
-
-    .suggestion:last-child {
-      border-bottom: 0;
-    }
-
-    .suggestion:hover {
-      background:
-        rgba(169,108,255,.14);
-    }
-
-    /* =====================================================
-       PREMIUM TICKET CARD
-    ===================================================== */
-
-    .ticket-card {
-      position: relative;
-
-      margin-top: 18px;
-
-      padding: 18px;
-
-      overflow: hidden;
-
-      border-radius: 15px;
-
-      border: 2px solid var(--chrome);
-
-      background:
-        linear-gradient(
-          135deg,
-          #321744 0%,
-          #1d1027 38%,
-          #0e0912 70%,
-          #2b143d 100%
-        );
-
-      box-shadow:
-        0 0 20px rgba(169,108,255,.18),
-        inset 0 0 20px rgba(255,255,255,.025);
-    }
-
-    .ticket-card::before {
-      content: "";
-
-      position: absolute;
-
-      top: 0;
-      left: -100%;
-
-      width: 50%;
-      height: 100%;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          rgba(255,255,255,.08),
-          transparent
-        );
-
-      transform: skewX(-20deg);
-
-      animation:
-        ticketShine 6s infinite;
-    }
-
-    @keyframes ticketShine {
-      0% {
-        left: -100%;
-      }
-
-      25%,
-      100% {
-        left: 150%;
-      }
-    }
-
-    .ticket-number {
-      font-size: 25px;
-
-      font-weight: 1000;
-
-      color: var(--purple2);
-
-      text-shadow:
-        0 0 10px rgba(198,154,255,.25);
-    }
-
-    .ticket-user {
-      margin: 10px 0;
-
-      font-size: 28px;
-
-      font-weight: 1000;
-
-      color: white;
-    }
-
-    .ticket-row {
-      display: flex;
-
-      justify-content: space-between;
-
-      gap: 12px;
-
-      padding-top: 9px;
-
-      margin-top: 9px;
-
-      border-top:
-        1px solid rgba(255,255,255,.09);
-
-      font-size: 12px;
-    }
-
-    .ticket-row strong {
-      font-weight: 1000;
-
-      color: #fff;
-    }
-
-    .ticket-foot {
-      padding-top: 11px;
-
-      margin-top: 11px;
-
-      border-top:
-        1px dashed #67576f;
-
-      color: #bdb3c4;
-
-      font-size: 10px;
-
-      letter-spacing: .25px;
-    }
-
-    .card-actions {
-      display: flex;
-
-      gap: 8px;
-
-      margin-top: 13px;
-    }
-
-    .card-actions .btn {
-      flex: 1;
-    }
-
-    /* =====================================================
-       CANJE TABLE
-    ===================================================== */
-
-    .benefit-table {
-      width: 100%;
-
-      margin-top: 18px;
-
-      border-collapse: collapse;
-
-      overflow: hidden;
-
-      font-size: 12px;
-    }
-
-    .benefit-table th {
-      color: #aaa1b3;
-
-      font-size: 10px;
-
-      text-transform: uppercase;
-
-      letter-spacing: .5px;
-    }
-
-    .benefit-table th,
-    .benefit-table td {
-      padding: 11px 9px;
-
-      text-align: left;
-
-      border-bottom:
-        1px solid #302837;
-    }
-
-    .benefit-table tr.selected {
-      background:
-        rgba(169,108,255,.18);
-
-      box-shadow:
-        inset 4px 0 var(--purple2);
-    }
-
-    /* =====================================================
-       WINNER
-    ===================================================== */
-
-    .winner-card {
-      margin-top: 18px;
-
-      padding: 22px;
-
-      text-align: center;
-
-      border-radius: 17px;
-
-      border: 2px solid var(--chrome);
-
-      background:
-        radial-gradient(
-          circle at 50% 0,
-          rgba(169,108,255,.23),
-          transparent 55%
-        ),
-        linear-gradient(
-          145deg,
-          #2a1736,
-          #0e0912
-        );
-
-      box-shadow:
-        0 0 30px rgba(169,108,255,.25);
-    }
-
-    .winner-trophy {
-      font-size: 48px;
-
-      margin-bottom: 5px;
-    }
-
-    .winner-title {
-      font-size: 12px;
-
-      font-weight: 900;
-
-      letter-spacing: 2px;
-
-      color: #cdb7dc;
-    }
-
-    .winner-name {
-      margin: 8px 0;
-
-      font-size: 32px;
-
-      font-weight: 1000;
-
-      color: #fff;
-    }
-
-    .winner-ticket {
-      font-size: 25px;
-
-      font-weight: 1000;
-
-      color: var(--purple2);
-    }
-
-    .winner-prize {
-      margin-top: 10px;
-
-      font-size: 20px;
-
-      font-weight: 1000;
-    }
-
-    /* =====================================================
-       MODAL
-    ===================================================== */
-
-    .modal {
-      position: fixed;
-
-      inset: 0;
-
-      display: none;
-
-      place-items: center;
-
-      padding: 20px;
-
-      z-index: 100;
-
-      background:
-        rgba(0,0,0,.78);
-
-      backdrop-filter:
-        blur(5px);
-    }
-
-    .modal.show {
-      display: grid;
-    }
-
-    .modal-box {
-      width: min(430px, 100%);
-
-      padding: 23px;
-
-      border-radius: 17px;
-
-      border: 2px solid var(--chrome);
-
-      background:
-        linear-gradient(
-          145deg,
-          #281737,
-          #0d0911
-        );
-
-      box-shadow:
-        0 0 35px rgba(169,108,255,.25);
-    }
-
-    .modal-title {
-      margin: 0 0 17px;
-
-      font-size: 20px;
-
-      font-weight: 950;
-    }
-
-    /* =====================================================
-       TOAST
-    ===================================================== */
-
-    #toast {
-      position: fixed;
-
-      right: 18px;
-
-      bottom: 18px;
-
-      z-index: 200;
-
-      max-width: 340px;
-
-      padding: 13px 16px;
-
-      border-radius: 10px;
-
-      border: 1px solid #806b91;
-
-      background: #17101e;
-
-      box-shadow:
-        0 0 20px rgba(169,108,255,.18);
-
-      color: white;
-
-      font-size: 12px;
-
-      display: none;
-    }
-
-    #toast.show {
-      display: block;
-    }
-
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
-
-    @media (max-width: 720px) {
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tabs {
-        grid-template-columns:
-          repeat(2, 1fr);
-      }
-
-      .header-title {
-        font-size: 25px;
-      }
-
-      .header-s {
-        font-size: 56px;
-      }
-
-      .section {
-        padding: 17px;
-      }
-
-      .ticket-user {
-        font-size: 23px;
-      }
-
-      .ticket-row {
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .card-actions {
-        flex-direction: column;
-      }
-
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#08070b">
+<title>Solcito Mayu Play</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+--bg:#07060a;
+--panel:#111016;
+--panel2:#17131d;
+--purple:#9c78ff;
+--purple2:#7046cf;
+--lilac:#c1a8ff;
+--silver:#e1e4e9;
+--muted:#aaa3b3;
+--green:#55d99a;
+--red:#ff6f89;
+--border:#8065ae;
+}
+
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+min-height:100vh;
+background:
+radial-gradient(circle at 50% -10%,#43236b55,transparent 38%),
+radial-gradient(circle at 100% 100%,#30185c33,transparent 35%),
+linear-gradient(145deg,#050507,#100c14 55%,#050507);
+color:#f7f5fa;
+font-family:Montserrat,Arial,sans-serif;
+}
+
+button,
+input,
+select{
+font:inherit;
+}
+
+button{
+cursor:pointer;
+}
+
+.hidden{
+display:none!important;
+}
+
+/* LOGIN */
+
+.login-screen{
+min-height:100vh;
+display:grid;
+place-items:center;
+padding:20px;
+}
+
+.login-box{
+width:min(430px,100%);
+padding:32px;
+border:2px solid var(--purple);
+border-radius:25px;
+background:linear-gradient(145deg,#17131d,#0b090e);
+box-shadow:
+0 0 35px #9b70ff35,
+0 25px 70px #000b;
+}
+
+.login-logo{
+width:76px;
+height:76px;
+margin:auto;
+display:grid;
+place-items:center;
+border-radius:21px;
+font-size:50px;
+font-weight:900;
+font-style:italic;
+color:#16131a;
+background:linear-gradient(
+145deg,
+#ffffff 0%,
+#9ca2ac 42%,
+#ffffff 64%,
+#747984 100%
+);
+box-shadow:0 0 30px #9d72ff88;
+text-shadow:
+1px 2px 1px #ffffffaa,
+-2px -1px 1px #555;
+}
+
+.login-title{
+text-align:center;
+font-size:25px;
+font-weight:900;
+margin:15px 0 5px;
+}
+
+.login-subtitle{
+text-align:center;
+color:var(--muted);
+font-size:12px;
+margin-bottom:25px;
+}
+
+.field{
+margin-bottom:14px;
+}
+
+.field label{
+display:block;
+font-size:11px;
+font-weight:800;
+letter-spacing:.5px;
+color:#c7c0d0;
+margin-bottom:7px;
+}
+
+input,
+select{
+width:100%;
+padding:13px 14px;
+border-radius:11px;
+border:1px solid #5c4d6d;
+background:#09080c;
+color:white;
+outline:none;
+}
+
+input:focus,
+select:focus{
+border-color:#b69aff;
+box-shadow:0 0 0 3px #9c78ff18;
+}
+
+.login-error{
+height:18px;
+margin-top:10px;
+text-align:center;
+font-size:12px;
+color:var(--red);
+}
+
+/* APP */
+
+.app{
+width:min(1200px,100%);
+margin:auto;
+padding:22px;
+}
+
+.header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+margin-bottom:22px;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.brand-logo{
+width:62px;
+height:62px;
+display:grid;
+place-items:center;
+border-radius:18px;
+font-size:40px;
+font-weight:900;
+font-style:italic;
+color:#15131a;
+background:linear-gradient(
+145deg,
+#fff,
+#aeb4c0 43%,
+#fff 65%,
+#777d88
+);
+box-shadow:
+0 0 25px #9d72ff70,
+0 8px 25px #0009;
+}
+
+.brand h1{
+margin:0;
+font-size:25px;
+font-weight:900;
+letter-spacing:-1px;
+background:linear-gradient(90deg,#fff,#c0aaff,#eee);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+}
+
+.brand small{
+color:#a99eb6;
+font-size:11px;
+font-weight:600;
+}
+
+.session{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.status{
+padding:8px 12px;
+border-radius:999px;
+border:1px solid #8067b4;
+background:#9b79ff12;
+font-size:11px;
+color:#d2c7df;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(12,1fr);
+gap:18px;
+}
+
+.section{
+grid-column:span 12;
+position:relative;
+padding:20px;
+border:2px solid var(--border);
+border-radius:20px;
+background:linear-gradient(
+145deg,
+#151119ee,
+#0c0a0ff5
+);
+box-shadow:
+0 0 14px #8d69ff22,
+0 15px 40px #0008;
+animation:pulseBorder 3.5s ease-in-out infinite;
+}
+
+.section.half{
+grid-column:span 6;
+}
+
+@keyframes pulseBorder{
+0%,100%{
+box-shadow:
+0 0 12px #8d69ff1b,
+0 15px 40px #0008;
+}
+50%{
+box-shadow:
+0 0 24px #9d75ff38,
+0 15px 40px #0008;
+}
+}
+
+.section-title{
+margin:0 0 17px;
+font-size:18px;
+font-weight:900;
+letter-spacing:.2px;
+}
+
+.section-title span{
+color:var(--lilac);
+}
+
+/* FORMS */
+
+.form-grid{
+display:grid;
+grid-template-columns:2fr 1fr 1fr;
+gap:12px;
+}
+
+.actions{
+display:flex;
+gap:9px;
+flex-wrap:wrap;
+margin-top:13px;
+}
+
+.btn{
+padding:12px 16px;
+border-radius:11px;
+border:1px solid #9477dd;
+background:linear-gradient(135deg,#a581ff,#7046cf);
+color:white;
+font-weight:800;
+box-shadow:0 0 16px #8057df25;
+transition:.2s;
+}
+
+.btn:hover{
+filter:brightness(1.1);
+transform:translateY(-1px);
+}
+
+.btn.secondary{
+background:#17131e;
+border-color:#5c506b;
+}
+
+.btn.green{
+background:#123a28;
+border-color:#3ca874;
+}
+
+.btn.red{
+background:#3a101c;
+border-color:#a0445c;
+}
+
+.btn:disabled{
+opacity:.4;
+cursor:not-allowed;
+transform:none;
+}
+
+.notice{
+padding:11px 13px;
+border:1px solid #44394f;
+border-radius:10px;
+background:#ffffff03;
+color:#bdb5c7;
+font-size:11px;
+line-height:1.5;
+margin-bottom:12px;
+}
+
+/* STATS */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:15px;
+}
+
+.stat{
+padding:13px;
+border:1px solid #403747;
+border-radius:13px;
+background:#09080c;
+}
+
+.stat strong{
+display:block;
+font-size:22px;
+color:var(--lilac);
+margin-bottom:3px;
+}
+
+.stat span{
+font-size:10px;
+color:#aaa1b1;
+}
+
+/* LIST */
+
+.list{
+display:grid;
+gap:8px;
+margin-top:12px;
+}
+
+.list-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+padding:11px;
+border:1px solid #39303f;
+border-radius:11px;
+background:#0b090e;
+font-size:12px;
+}
+
+.ticket-number{
+font-size:19px;
+font-weight:900;
+color:#c2a7ff;
+}
+
+.list-meta{
+font-size:10px;
+color:#aaa1b1;
+text-align:right;
+}
+
+/* TABLE */
+
+.table-wrap{
+overflow:auto;
+margin-top:12px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:11px;
+}
+
+th,
+td{
+padding:9px;
+text-align:left;
+border-bottom:1px solid #332d38;
+}
+
+th{
+color:#c7b7e6;
+font-weight:800;
+}
+
+.benefit-row{
+transition:.2s;
+}
+
+.benefit-row.active{
+background:#7d4cff28;
+box-shadow:inset 4px 0 #b497ff;
+}
+
+/* MODAL */
+
+.modal-bg{
+position:fixed;
+inset:0;
+z-index:100;
+display:grid;
+place-items:center;
+padding:18px;
+background:#000c;
+backdrop-filter:blur(5px);
+}
+
+.modal{
+width:min(650px,100%);
+max-height:92vh;
+overflow:auto;
+padding:18px;
+border-radius:21px;
+border:2px solid #a18aff;
+background:#100d14;
+box-shadow:
+0 0 50px #8c5dff55,
+0 25px 70px #000c;
+}
+
+.modal-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+margin-bottom:13px;
+}
+
+.modal-head strong{
+font-size:16px;
+font-weight:900;
+}
+
+.close{
+border:0;
+background:#ffffff0d;
+color:white;
+padding:8px 11px;
+border-radius:9px;
+font-size:18px;
+}
+
+/* PREMIUM CARD */
+
+.premium-card{
+position:relative;
+overflow:hidden;
+padding:18px;
+border-radius:16px;
+border:2px solid #d9dde4;
+background:
+linear-gradient(
+115deg,
+#281633,
+#120f18 48%,
+#2c193e
+);
+box-shadow:
+inset 0 0 0 1px #ffffff55,
+0 12px 30px #0008;
+}
+
+.premium-card:after{
+content:"";
+position:absolute;
+top:0;
+bottom:0;
+width:35%;
+left:-50%;
+background:linear-gradient(
+90deg,
+transparent,
+#ffffff20,
+transparent
+);
+transform:skewX(-20deg);
+animation:shine 5s infinite;
+}
+
+@keyframes shine{
+70%,100%{
+left:130%;
+}
+}
+
+.premium-card>*{
+position:relative;
+z-index:1;
+}
+
+.ticket-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+padding-bottom:10px;
+border-bottom:1px solid #ffffff2b;
+font-size:12px;
+font-weight:800;
+}
+
+.ticket-numbers{
+font-size:24px;
+font-weight:900;
+color:#c3a8ff;
+}
+
+.card-name{
+font-size:24px;
+font-weight:900;
+margin:14px 0 10px;
+}
+
+.card-line{
+display:flex;
+justify-content:space-between;
+gap:12px;
+margin:7px 0;
+font-size:12px;
+}
+
+.card-line strong{
+font-weight:900;
+}
+
+.card-footer{
+padding-top:10px;
+margin-top:12px;
+border-top:1px solid #ffffff2b;
+text-align:center;
+font-size:10px;
+color:#d0c7d9;
+}
+
+/* TOAST */
+
+.toast{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:200;
+padding:12px 15px;
+border-radius:11px;
+border:1px solid #9477d7;
+background:#18131f;
+box-shadow:0 10px 30px #0009;
+font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+.app{
+padding:14px;
+}
+
+.header{
+align-items:flex-start;
+}
+
+.brand h1{
+font-size:19px;
+}
+
+.brand-logo{
+width:52px;
+height:52px;
+font-size:34px;
+}
+
+.section.half{
+grid-column:span 12;
+}
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.session .status{
+display:none;
+}
+
+}
+
+@media(max-width:500px){
+
+.brand small{
+display:none;
+}
+
+.header{
+flex-direction:column;
+}
+
+.session{
+width:100%;
+justify-content:flex-end;
+}
+
+.section{
+padding:15px;
+}
+
+.card-name{
+font-size:20px;
+}
+
+.ticket-numbers{
+font-size:20px;
+}
+
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =====================================================
-       LOGIN
-  ====================================================== -->
+<!-- =========================
+     LOGIN
+========================= -->
 
-  <div id="loginScreen">
+<div id="loginView" class="login-screen">
 
-    <div class="login-card">
+<form id="loginForm" class="login-box">
 
-      <div class="login-logo">
-        S
-      </div>
+<div class="login-logo">S</div>
 
-      <div class="brand">
-        Solcito Mayu Play
-      </div>
+<div class="login-title">
+Solcito Mayu Play
+</div>
 
-      <div class="login-subtitle">
-        SISTEMA INTERNO · ACCESO RESTRINGIDO
-      </div>
+<div class="login-subtitle">
+Panel privado de administración
+</div>
 
-      <form id="loginForm">
+<div class="field">
+<label>USUARIO</label>
+<input
+id="loginUser"
+type="text"
+autocomplete="username"
+required
+>
+</div>
 
-        <div class="field">
+<div class="field">
+<label>CONTRASEÑA</label>
+<input
+id="loginPassword"
+type="password"
+autocomplete="current-password"
+required
+>
+</div>
 
-          <label>
-            USUARIO
-          </label>
+<button
+type="submit"
+class="btn"
+style="width:100%"
+>
+Ingresar
+</button>
 
-          <input
-            id="loginUser"
-            type="text"
-            autocomplete="username"
-            required
-          >
+<div id="loginError" class="login-error"></div>
 
-        </div>
+</form>
+</div>
 
-        <div class="field">
 
-          <label>
-            CONTRASEÑA
-          </label>
+<!-- =========================
+     APP
+========================= -->
 
-          <input
-            id="loginPassword"
-            type="password"
-            autocomplete="current-password"
-            required
-          >
+<div id="appView" class="app hidden">
 
-        </div>
+<header class="header">
 
-        <button
-          type="submit"
-          class="btn btn-primary btn-full"
-        >
-          INGRESAR AL SISTEMA
-        </button>
+<div class="brand">
 
-        <div
-          id="loginError"
-          class="login-error"
-        ></div>
+<div class="brand-logo">
+S
+</div>
 
-      </form>
+<div>
+<h1>Solcito Mayu Play</h1>
+<small>
+Participaciones • puntos • sorteos
+</small>
+</div>
 
-    </div>
+</div>
 
-  </div>
+<div class="session">
 
+<span id="sessionStatus" class="status">
+Sesión activa
+</span>
 
-  <!-- =====================================================
-       APP
-  ====================================================== -->
+<button
+id="logoutBtn"
+class="btn secondary"
+>
+Salir
+</button>
 
-  <div id="app" class="hidden">
+</div>
 
-    <div class="container">
+</header>
 
-      <header>
 
-        <div class="header-s">
-          S
-        </div>
+<main class="grid">
 
-        <div>
 
-          <div class="header-title">
-            Solcito Mayu Play
-          </div>
+<!-- =========================
+     REGISTRO
+========================= -->
 
-          <div class="header-subtitle">
-            Puntos · Participaciones · Tickets · Sorteos
-          </div>
+<section class="section">
 
-        </div>
+<h2 class="section-title">
+① <span>Registrar compra y generar tickets</span>
+</h2>
 
-      </header>
+<div
+id="lockedNotice"
+class="notice hidden"
+>
+La entrega de tickets está bloqueada. El registro volverá a habilitarse únicamente después de autorizar la reapertura.
+</div>
 
+<div class="form-grid">
 
-      <!-- =================================================
-           TABS
-      ================================================== -->
+<div class="field">
 
-      <div class="tabs">
+<label>USUARIO</label>
 
-        <button
-          class="tab active"
-          data-section="registro"
-        >
-          REGISTRAR COMPRA
-        </button>
+<input
+id="customerInput"
+list="customerList"
+placeholder="Buscar desde el 3.º carácter..."
+autocomplete="off"
+>
 
-        <button
-          class="tab"
-          data-section="usuarios"
-        >
-          USUARIOS
-        </button>
+<datalist id="customerList"></datalist>
 
-        <button
-          class="tab"
-          data-section="canjes"
-        >
-          CANJES
-        </button>
+</div>
 
-        <button
-          class="tab"
-          data-section="sorteo"
-        >
-          SORTEO
-        </button>
 
-      </div>
+<div class="field">
 
+<label>MONTO DE COMPRA</label>
 
-      <!-- =================================================
-           REGISTRO
-      ================================================== -->
+<input
+id="amountInput"
+type="number"
+min="1"
+step="1"
+placeholder="$"
+>
 
-      <section
-        id="registro"
-        class="section active"
-      >
+</div>
 
-        <h2 class="section-title">
-          Registrar compra
-        </h2>
 
-        <div
-          id="registerStatus"
-          class="status"
-        >
-          Consultando estado del sistema...
-        </div>
+<div class="field">
 
+<label>CANAL</label>
 
-        <div class="grid">
+<select id="channelInput">
 
-          <div class="field">
+<option value="WhatsApp">
+Promo WhatsApp
+</option>
 
-            <label>
-              USUARIO
-            </label>
+<option value="Telegram">
+Promo Telegram
+</option>
 
-            <input
-              id="purchaseUser"
-              type="text"
-              autocomplete="off"
-              placeholder="Escribí desde el tercer carácter"
-            >
+</select>
 
-            <div id="purchaseSuggestions"></div>
+</div>
 
-          </div>
+</div>
 
 
-          <div class="field">
+<div class="actions">
 
-            <label>
-              MONTO DE LA COMPRA
-            </label>
+<button
+id="registerBtn"
+class="btn"
+>
+Cargar compra
+</button>
 
-            <input
-              id="purchaseAmount"
-              type="number"
-              min="1"
-              placeholder="$"
-            >
+</div>
 
-          </div>
 
-        </div>
+<div class="stats">
 
+<div class="stat">
 
-        <div class="field">
+<strong id="pointsPreview">
+0
+</strong>
 
-          <label>
-            CANAL DE COMPRA
-          </label>
+<span>
+Puntos que suma
+</span>
 
-          <select id="purchaseChannel">
+</div>
 
-            <option value="WhatsApp">
-              WhatsApp
-            </option>
 
-            <option value="Telegram">
-              Telegram
-            </option>
+<div class="stat">
 
-          </select>
+<strong id="ticketsPreview">
+0
+</strong>
 
-        </div>
+<span>
+Tickets asignados
+</span>
 
+</div>
 
-        <button
-          id="registerPurchaseButton"
-          class="btn btn-primary"
-        >
-          GENERAR PARTICIPACIONES
-        </button>
 
+<div class="stat">
 
-        <div id="purchaseResult"></div>
+<strong id="channelPreview">
+WhatsApp
+</strong>
 
-      </section>
+<span>
+Promo seleccionada
+</span>
 
+</div>
 
-      <!-- =================================================
-           USUARIOS
-      ================================================== -->
+</div>
 
-      <section
-        id="usuarios"
-        class="section"
-      >
+</section>
 
-        <h2 class="section-title">
-          Buscar usuario
-        </h2>
 
-        <div class="field">
+<!-- =========================
+     BUSCAR USUARIO
+========================= -->
 
-          <label>
-            BUSCAR USUARIO
-          </label>
+<section class="section half">
 
-          <input
-            id="userSearch"
-            type="text"
-            autocomplete="off"
-            placeholder="Nombre o usuario..."
-          >
+<h2 class="section-title">
+② <span>Buscar usuario</span>
+</h2>
 
-          <div id="userSuggestions"></div>
+<div class="field">
 
-        </div>
+<label>
+BUSCAR DESDE EL 3.º CARÁCTER
+</label>
 
-        <div id="userResult"></div>
+<input
+id="userSearch"
+type="text"
+placeholder="Nombre o usuario..."
+>
 
-      </section>
+</div>
 
+<div
+id="userResults"
+class="list"
+>
+<div class="notice">
+Ingresá al menos 3 caracteres.
+</div>
+</div>
 
-      <!-- =================================================
-           CANJES
-      ================================================== -->
+</section>
 
-      <section
-        id="canjes"
-        class="section"
-      >
 
-        <h2 class="section-title">
-          Canjes
-        </h2>
+<!-- =========================
+     CANJES
+========================= -->
 
+<section class="section half">
 
-        <div class="grid">
+<h2 class="section-title">
+③ <span>Canjes</span>
+</h2>
 
-          <div class="field">
+<div class="field">
 
-            <label>
-              USUARIO
-            </label>
+<label>USUARIO</label>
 
-            <input
-              id="redeemUser"
-              type="text"
-              autocomplete="off"
-              placeholder="Nombre del usuario"
-            >
+<input
+id="redeemUser"
+list="customerList"
+placeholder="Seleccionar usuario"
+>
 
-            <div id="redeemSuggestions"></div>
+</div>
 
-          </div>
 
+<div class="field">
 
-          <div class="field">
+<label>BENEFICIO</label>
 
-            <label>
-              BENEFICIO
-            </label>
+<select id="benefitSelect">
 
-            <select id="benefitSelect">
+<option value="participation:1">
+1 participación — 100 puntos
+</option>
 
-              <option value="">
-                Seleccionar beneficio
-              </option>
+<option value="participation:3">
+3 participaciones — 275 puntos
+</option>
 
-              <option value="1">
-                1 participación — 100 puntos
-              </option>
+<option value="participation:7">
+7 participaciones — 600 puntos
+</option>
 
-              <option value="3">
-                3 participaciones — 275 puntos
-              </option>
+<option value="coupon20">
+Cupón 20% — 300 puntos
+</option>
 
-              <option value="7">
-                7 participaciones — 600 puntos
-              </option>
+</select>
 
-              <option value="coupon">
-                Cupón 20% — 300 puntos
-              </option>
+</div>
 
-            </select>
 
-          </div>
+<div class="notice">
 
-        </div>
+Cupón 20%:
+compra mínima $5.000,
+tope $50.000,
+vigencia 24 horas.
+Debe utilizarse en una próxima compra.
+La compra que utiliza el cupón no genera puntos.
 
+</div>
 
-        <button
-          id="redeemButton"
-          class="btn btn-primary"
-        >
-          REALIZAR CANJE
-        </button>
 
+<div class="table-wrap">
 
-        <table class="benefit-table">
+<table id="benefitTable">
 
-          <thead>
+<thead>
 
-            <tr>
+<tr>
+<th>Beneficio</th>
+<th>Puntos</th>
+<th>Resultado</th>
+</tr>
 
-              <th>
-                BENEFICIO
-              </th>
+</thead>
 
-              <th>
-                PUNTOS
-              </th>
+<tbody>
 
-              <th>
-                PARTICIPACIONES
-              </th>
+<tr
+class="benefit-row"
+data-value="participation:1"
+>
+<td>1 participación</td>
+<td>100</td>
+<td>1 ticket</td>
+</tr>
 
-            </tr>
+<tr
+class="benefit-row"
+data-value="participation:3"
+>
+<td>3 participaciones</td>
+<td>275</td>
+<td>3 tickets</td>
+</tr>
 
-          </thead>
+<tr
+class="benefit-row"
+data-value="participation:7"
+>
+<td>7 participaciones</td>
+<td>600</td>
+<td>7 tickets</td>
+</tr>
 
-          <tbody>
+<tr
+class="benefit-row"
+data-value="coupon20"
+>
+<td>Cupón 20%</td>
+<td>300</td>
+<td>24 h</td>
+</tr>
 
-            <tr data-benefit="1">
+</tbody>
 
-              <td>
-                1 participación
-              </td>
+</table>
 
-              <td>
-                100
-              </td>
+</div>
 
-              <td>
-                1
-              </td>
 
-            </tr>
+<div class="actions">
 
+<button
+id="redeemBtn"
+class="btn"
+>
+Confirmar canje
+</button>
 
-            <tr data-benefit="3">
+</div>
 
-              <td>
-                3 participaciones
-              </td>
+</section>
 
-              <td>
-                275
-              </td>
 
-              <td>
-                3
-              </td>
+<!-- =========================
+     TICKETS
+========================= -->
 
-            </tr>
+<section class="section">
 
+<h2 class="section-title">
+④ <span>Tickets recientes</span>
+</h2>
 
-            <tr data-benefit="7">
+<div class="field">
 
-              <td>
-                7 participaciones
-              </td>
+<input
+id="ticketSearch"
+type="text"
+placeholder="Buscar por número, usuario o agente..."
+>
 
-              <td>
-                600
-              </td>
+</div>
 
-              <td>
-                7
-              </td>
+<div
+id="ticketList"
+class="list"
+>
+</div>
 
-            </tr>
+<div class="actions">
 
+<button
+id="moreTicketsBtn"
+class="btn secondary"
+>
+Ver 15 más
+</button>
 
-            <tr data-benefit="coupon">
+</div>
 
-              <td>
-                Cupón 20%
-              </td>
+</section>
 
-              <td>
-                300
-              </td>
 
-              <td>
-                —
-              </td>
+<!-- =========================
+     SORTEO
+========================= -->
 
-            </tr>
+<section class="section">
 
-          </tbody>
+<h2 class="section-title">
+⑤ <span>Sorteo semanal</span>
+</h2>
 
-        </table>
+<div
+id="drawMessage"
+class="notice"
+>
+El sorteo requiere autorización.
+Los sábados a las 19:59 se bloquea la carga.
+</div>
 
 
-        <div id="redeemResult"></div>
+<div class="stats">
 
-      </section>
+<div class="stat">
 
+<strong id="eligibleCount">
+0
+</strong>
 
-      <!-- =================================================
-           SORTEO
-      ================================================== -->
+<span>
+Tickets elegibles
+</span>
 
-      <section
-        id="sorteo"
-        class="section"
-      >
+</div>
 
-        <h2 class="section-title">
-          Sorteo semanal
-        </h2>
 
+<div class="stat">
 
-        <div
-          id="drawStatus"
-          class="status"
-        >
-          Consultando estado...
-        </div>
+<strong>
+$100.000
+</strong>
 
+<span>
+Premio semanal
+</span>
 
-        <button
-          id="drawButton"
-          class="btn btn-primary"
-        >
-          🏆 SORTEAR ÚNICO GANADOR
-        </button>
+</div>
 
 
-        <button
-          id="reopenButton"
-          class="btn"
-        >
-          HABILITAR REGISTRO DE TICKETS
-        </button>
+<div class="stat">
 
+<strong id="drawPeriod">
+—
+</strong>
 
-        <div id="drawResult"></div>
+<span>
+Período
+</span>
 
+</div>
 
-        <h3 style="margin-top:28px;">
-          Ganadores anteriores
-        </h3>
+</div>
 
 
-        <div id="winnersList"></div>
+<div class="actions">
 
-      </section>
+<button
+id="drawBtn"
+class="btn"
+disabled
+>
+Sortear ganador
+</button>
 
-    </div>
+<button
+id="reopenBtn"
+class="btn green"
+disabled
+>
+Habilitar registro
+</button>
 
-  </div>
+</div>
 
 
-  <!-- =====================================================
-       MODAL
-  ====================================================== -->
+<h3>
+Ganadores anteriores
+</h3>
 
-  <div
-    id="authorizationModal"
-    class="modal"
-  >
+<div
+id="winnerList"
+class="list"
+>
+</div>
 
-    <div class="modal-box">
+</section>
 
-      <h3
-        id="modalTitle"
-        class="modal-title"
-      >
-        Autorización
-      </h3>
+</main>
 
+</div>
 
-      <div class="field">
 
-        <label>
-          CONTRASEÑA DE AUTORIZACIÓN
-        </label>
+<!-- =========================
+     MODAL
+========================= -->
 
-        <input
-          id="adminPassword"
-          type="password"
-          autocomplete="current-password"
-        >
+<div
+id="modalBg"
+class="modal-bg hidden"
+>
 
-      </div>
+<div class="modal">
 
+<div class="modal-head">
 
-      <button
-        id="confirmAuthorization"
-        class="btn btn-primary"
-      >
-        CONFIRMAR
-      </button>
+<strong id="modalTitle">
+Comprobante
+</strong>
 
+<button
+id="closeModal"
+class="close"
+>
+×
+</button>
 
-      <button
-        id="cancelAuthorization"
-        class="btn"
-      >
-        CANCELAR
-      </button>
+</div>
 
-    </div>
 
-  </div>
+<div id="modalContent"></div>
 
 
-  <!-- =====================================================
-       TOAST
-  ====================================================== -->
+<div class="actions">
 
-  <div id="toast"></div>
+<button
+id="savePngBtn"
+class="btn"
+>
+Guardar PNG
+</button>
 
+<button
+id="shareBtn"
+class="btn secondary"
+>
+Compartir
+</button>
 
-  <!-- =====================================================
-       JAVASCRIPT
-  ====================================================== -->
+</div>
 
-  <script>
+</div>
 
-    /*
-     * =====================================================
-     * URL DE GOOGLE APPS SCRIPT
-     * =====================================================
-     */
+</div>
 
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbyQWh476V_x8VZpvdlF7Tzh-U7C8xci0fHB-hnnm6Tt_MfnNotcz5bTEE3_-WZPpDan/exec";
 
+<div
+id="toast"
+class="toast hidden"
+></div>
 
-    /*
-     * Token de sesión.
-     *
-     * NO guardamos la contraseña.
-     */
 
-    let sessionToken =
-      sessionStorage.getItem(
-        "solcito_session"
-      ) || "";
+<script>
+"use strict";
 
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
 
-    let authorizationAction =
-      null;
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyQWh476V_x8VZpvdlF7Tzh-U7C8xci0fHB-hnnm6Tt_MfnNotcz5bTEE3_-WZPpDan/exec";
 
+const APP = {
+token:null,
+locked:false,
+ticketPage:0,
+currentCardTitle:"",
+currentCardFile:"solcito-mayu-play"
+};
 
-    /*
-     * =====================================================
-     * HELPERS
-     * =====================================================
-     */
 
-    const $ = id =>
-      document.getElementById(id);
+/* =====================================================
+   HELPERS
+===================================================== */
 
+const $ = id => document.getElementById(id);
 
-    function escapeHTML(value) {
+function escapeHTML(value){
 
-      return String(
-        value ?? ""
-      ).replace(
-        /[&<>"']/g,
-        char => ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        }[char])
-      );
+return String(value ?? "")
+.replace(/[&<>"']/g,char=>({
 
-    }
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
 
+}[char]));
 
-    function showToast(message) {
+}
 
-      const toast =
-        $("toast");
 
-      toast.textContent =
-        message;
+function showToast(message){
 
-      toast.classList.add(
-        "show"
-      );
+const toast = $("toast");
 
-      setTimeout(() => {
+toast.textContent = message;
+toast.classList.remove("hidden");
 
-        toast.classList.remove(
-          "show"
-        );
+clearTimeout(window.__toastTimer);
 
-      }, 3000);
+window.__toastTimer =
+setTimeout(
+()=>toast.classList.add("hidden"),
+3000
+);
 
-    }
+}
 
 
-    /*
-     * =====================================================
-     * API
-     * =====================================================
-     */
+/* =====================================================
+   API
+===================================================== */
 
-    async function api(
-      action,
-      data = {}
-    ) {
+async function api(action,data={}){
 
-      const response =
-        await fetch(
-          API_URL,
-          {
-            method: "POST",
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
+body:JSON.stringify({
+action,
+token:APP.token,
+...data
+})
+}
+);
 
-            headers: {
-              "Content-Type":
-                "text/plain;charset=utf-8"
-            },
+let result;
 
-            body: JSON.stringify({
-              accion: action,
+try{
+result = await response.json();
+}catch(error){
+throw new Error(
+"No se recibió una respuesta válida del servidor."
+);
+}
 
-              token:
-                sessionToken,
+if(!response.ok || result.error){
 
-              ...data
-            })
-          }
-        );
+throw new Error(
+result.error ||
+"Error de comunicación con Apps Script."
+);
 
+}
 
-      const result =
-        await response.json();
+return result;
 
+}
 
-      if (!result.ok) {
 
-        throw new Error(
-          result.error ||
-          "Se produjo un error."
-        );
+/* =====================================================
+   LOGIN
+===================================================== */
 
-      }
+async function loginRequest(username,password){
 
+const response =
+await fetch(
+API_URL,
+{
+method:"POST",
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
+body:JSON.stringify({
+action:"login",
+username,
+password
+})
+}
+);
 
-      return result;
+let result;
 
-    }
+try{
+result=await response.json();
+}catch(error){
+throw new Error(
+"Respuesta inválida del servidor."
+);
+}
 
+if(!response.ok || result.error){
 
-    /*
-     * =====================================================
-     * LOGIN
-     * =====================================================
-     */
+throw new Error(
+result.error ||
+"Usuario o contraseña incorrectos."
+);
 
-    $("loginForm")
-      .addEventListener(
-        "submit",
-        async event => {
+}
 
-          event.preventDefault();
+return result;
 
+}
 
-          const username =
-            $("loginUser")
-              .value
-              .trim();
 
+$("loginForm").addEventListener(
+"submit",
+async event=>{
 
-          const password =
-            $("loginPassword")
-              .value;
+event.preventDefault();
 
+$("loginError").textContent="";
 
-          $("loginError")
-            .textContent = "";
+const username =
+$("loginUser").value.trim();
 
+const password =
+$("loginPassword").value;
 
-          try {
+if(!username || !password){
 
-            const result =
-              await api(
-                "login",
-                {
-                  usuario:
-                    username,
+$("loginError").textContent =
+"Completá usuario y contraseña.";
 
-                  contrasena:
-                    password
-                }
-              );
+return;
 
+}
 
-            sessionToken =
-              result.token;
+try{
 
+const result =
+await loginRequest(
+username,
+password
+);
 
-            sessionStorage.setItem(
-              "solcito_session",
-              sessionToken
-            );
+if(!result.token){
 
+throw new Error(
+"El servidor no generó una sesión válida."
+);
 
-            enterApplication();
+}
 
+APP.token=result.token;
+APP.locked=!!result.locked;
 
-          } catch (error) {
+$("loginView").classList.add("hidden");
+$("appView").classList.remove("hidden");
 
-            $("loginError")
-              .textContent =
-              error.message;
+applyLockState();
 
-          }
+await loadDashboard();
 
-        }
-      );
+showToast("Sesión iniciada correctamente.");
 
+}catch(error){
 
-    /*
-     * =====================================================
-     * ENTRAR A LA APLICACIÓN
-     * =====================================================
-     */
+$("loginError").textContent =
+error.message;
 
-    function enterApplication() {
+}
 
-      $("loginScreen")
-        .classList
-        .add("hidden");
+}
+);
 
 
-      $("app")
-        .classList
-        .remove("hidden");
+/* =====================================================
+   LOGOUT
+===================================================== */
 
+$("logoutBtn").addEventListener(
+"click",
+()=>{
 
-      updateSystemStatus();
+APP.token=null;
 
-      loadWinners();
+$("appView").classList.add("hidden");
+$("loginView").classList.remove("hidden");
 
-    }
+$("loginPassword").value="";
+$("loginUser").value="";
 
+}
+);
 
-    /*
-     * =====================================================
-     * TABS
-     * =====================================================
-     */
 
-    document
-      .querySelectorAll(".tab")
-      .forEach(button => {
+/* =====================================================
+   ESTADO DE REGISTRO
+===================================================== */
 
-        button.addEventListener(
-          "click",
-          () => {
+function applyLockState(){
 
-            document
-              .querySelectorAll(".tab")
-              .forEach(
-                item =>
-                  item.classList
-                    .remove("active")
-              );
+$("registerBtn").disabled =
+APP.locked;
 
+$("lockedNotice")
+.classList.toggle(
+"hidden",
+!APP.locked
+);
 
-            document
-              .querySelectorAll(".section")
-              .forEach(
-                section =>
-                  section.classList
-                    .remove("active")
-              );
+}
 
 
-            button
-              .classList
-              .add("active");
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
+async function loadDashboard(){
 
-            const section =
-              $(button.dataset.section);
+try{
 
+const data =
+await api("dashboard");
 
-            if (section) {
+APP.locked=!!data.locked;
 
-              section
-                .classList
-                .add("active");
+applyLockState();
 
-            }
+$("eligibleCount").textContent =
+data.eligibleCount ?? 0;
 
-          }
-        );
+$("drawPeriod").textContent =
+data.period || "—";
 
-      });
+$("drawMessage").textContent =
+data.drawMessage ||
+"Estado actualizado.";
 
+$("drawBtn").disabled =
+!data.drawAuthorized;
 
-    /*
-     * =====================================================
-     * ESTADO DEL SISTEMA
-     * =====================================================
-     */
+$("reopenBtn").disabled =
+!data.reopenAuthorized;
 
-    async function updateSystemStatus() {
+renderTickets(
+data.recentTickets || []
+);
 
-      try {
+renderWinners(
+data.winners || []
+);
 
-        const result =
-          await api(
-            "estadoSistema"
-          );
+populateCustomers(
+data.customers || []
+);
 
+}catch(error){
 
-        const open =
-          result.estado ===
-          "ABIERTO";
+showToast(error.message);
 
+}
 
-        const registerStatus =
-          $("registerStatus");
+}
 
 
-        const drawStatus =
-          $("drawStatus");
+/* =====================================================
+   CLIENTES / USUARIOS
+===================================================== */
 
+function populateCustomers(customers){
 
-        registerStatus
-          .classList
-          .remove(
-            "open",
-            "closed"
-          );
+const html =
+customers
+.map(
+customer=>
+`<option value="${escapeHTML(customer)}"></option>`
+)
+.join("");
 
+$("customerList").innerHTML=html;
 
-        drawStatus
-          .classList
-          .remove(
-            "open",
-            "closed"
-          );
+}
 
 
-        if (open) {
+/* =====================================================
+   VISTA PREVIA COMPRA
+===================================================== */
 
-          registerStatus
-            .classList
-            .add("open");
+function updatePurchasePreview(){
 
-          registerStatus
-            .textContent =
-            "● REGISTRO DE TICKETS ABIERTO";
+const amount =
+Number($("amountInput").value || 0);
 
+const channel =
+$("channelInput").value;
 
-          drawStatus
-            .classList
-            .add("open");
+$("channelPreview").textContent =
+channel;
 
-          drawStatus
-            .textContent =
-            "● REGISTRO ABIERTO";
+let tickets=0;
 
-        } else {
+if(amount>=2500 && amount<15000){
 
-          registerStatus
-            .classList
-            .add("closed");
+tickets =
+channel==="Telegram"
+?2
+:1;
 
-          registerStatus
-            .textContent =
-            "● REGISTRO DE TICKETS CERRADO";
+}else if(amount>=15000){
 
+tickets =
+channel==="Telegram"
+?4
+:2;
 
-          drawStatus
-            .classList
-            .add("closed");
+}
 
-          drawStatus
-            .textContent =
-            "● REGISTRO CERRADO";
+$("ticketsPreview").textContent =
+tickets;
 
-        }
 
+/*
+Los puntos se calculan en Apps Script.
+Esta vista previa es solamente visual.
+*/
 
-        $("registerPurchaseButton")
-          .disabled =
-          !open;
+$("pointsPreview").textContent =
+amount>0
+?Math.floor(amount/1000)*10
+:0;
 
+}
 
-      } catch (error) {
 
-        showToast(
-          error.message
-        );
+$("amountInput").addEventListener(
+"input",
+updatePurchasePreview
+);
 
-      }
+$("channelInput").addEventListener(
+"change",
+updatePurchasePreview
+);
 
-    }
 
+/* =====================================================
+   REGISTRAR COMPRA
+===================================================== */
 
-    /*
-     * =====================================================
-     * AUTOCOMPLETADO
-     * =====================================================
-     */
+$("registerBtn").addEventListener(
+"click",
+async ()=>{
 
-    async function showSuggestions(
-      input,
-      container
-    ) {
+const usuario =
+$("customerInput").value.trim();
 
-      const text =
-        input.value
-          .trim();
+const amount =
+Number($("amountInput").value);
 
+const channel =
+$("channelInput").value;
 
-      if (text.length < 3) {
+if(!usuario){
 
-        container.innerHTML =
-          "";
+showToast("Ingresá el usuario.");
 
-        return;
+return;
 
-      }
+}
 
+if(!amount || amount<1){
 
-      try {
+showToast("Ingresá un monto válido.");
 
-        const result =
-          await api(
-            "buscarUsuarios",
-            {
-              texto:
-                text
-            }
-          );
+return;
 
+}
 
-        if (
-          !result.data ||
-          result.data.length === 0
-        ) {
+try{
 
-          container.innerHTML =
-            "";
+const result =
+await api(
+"registerPurchase",
+{
+usuario,
+amount,
+channel
+}
+);
 
-          return;
+$("pointsPreview").textContent =
+result.pointsAdded ?? 0;
 
-        }
+$("ticketsPreview").textContent =
+(result.tickets || []).length;
 
+showTicketModal(
+"Compra registrada",
+{
+...result,
+usuario,
+channel
+},
+"compra"
+);
 
-        container.innerHTML =
+$("amountInput").value="";
 
-          `<div class="suggestions">` +
+await loadDashboard();
 
-          result.data
-            .map(user => `
+}catch(error){
 
-              <div
-                class="suggestion"
-                data-username="${escapeHTML(user.usuario)}"
-              >
-                <strong>
-                  ${escapeHTML(user.usuario)}
-                </strong>
-                ·
-                ${user.puntos}
-                puntos
-              </div>
+showToast(error.message);
 
-            `)
-            .join("") +
+}
 
-          `</div>`;
+});
 
 
-        container
-          .querySelectorAll(
-            ".suggestion"
-          )
-          .forEach(item => {
+/* =====================================================
+   TARJETA PREMIUM
+===================================================== */
 
-            item.addEventListener(
-              "click",
-              () => {
+function buildTicketCard(data){
 
-                input.value =
-                  item.dataset.username;
+const tickets =
+Array.isArray(data.tickets)
+?data.tickets.join(" • ")
+:(data.ticket || "—");
 
-                container.innerHTML =
-                  "";
+return `
 
-              }
-            );
+<div
+id="exportCard"
+class="premium-card"
+>
 
-          });
+<div class="ticket-top">
 
+<span>
+TICKET
+</span>
 
-      } catch (error) {
+<span class="ticket-numbers">
+${escapeHTML(tickets)}
+</span>
 
-        showToast(
-          error.message
-        );
+</div>
 
-      }
 
-    }
+<div class="card-name">
+${escapeHTML(data.usuario || "—")}
+</div>
 
 
-    $("purchaseUser")
-      .addEventListener(
-        "input",
-        event =>
-          showSuggestions(
-            event.target,
-            $("purchaseSuggestions")
-          )
-      );
+<div class="card-line">
 
+<span>
+Puntos que suma
+</span>
 
-    $("redeemUser")
-      .addEventListener(
-        "input",
-        event =>
-          showSuggestions(
-            event.target,
-            $("redeemSuggestions")
-          )
-      );
+<strong>
+${escapeHTML(data.pointsAdded ?? 0)}
+</strong>
 
+</div>
 
-    /*
-     * =====================================================
-     * REGISTRAR COMPRA
-     * =====================================================
-     */
 
-    $("registerPurchaseButton")
-      .addEventListener(
-        "click",
-        async () => {
+<div class="card-line">
 
-          const username =
-            $("purchaseUser")
-              .value
-              .trim();
+<span>
+Puntos acumulados
+</span>
 
+<span>
+${escapeHTML(data.pointsTotal ?? "—")}
+</span>
 
-          const amount =
-            Number(
-              $("purchaseAmount")
-                .value
-            );
+</div>
 
 
-          const channel =
-            $("purchaseChannel")
-              .value;
+<div class="card-line">
 
+<span>
+Participaciones que suma
+</span>
 
-          if (!username) {
+<strong>
+${escapeHTML(data.participationsAdded ?? 0)}
+</strong>
 
-            showToast(
-              "Ingresá el nombre del usuario."
-            );
+</div>
 
-            return;
 
-          }
+<div class="card-line">
 
+<span>
+Participaciones acumuladas
+</span>
 
-          if (
-            !amount ||
-            amount < 1
-          ) {
+<span>
+${escapeHTML(data.participationsTotal ?? "—")}
+</span>
 
-            showToast(
-              "Ingresá un monto válido."
-            );
+</div>
 
-            return;
 
-          }
+<div class="card-line">
 
+<span>
+Agente
+</span>
 
-          try {
+<span>
+${escapeHTML(data.agent || "Solcito")}
+</span>
 
-            const result =
-              await api(
-                "registrarCompra",
-                {
-                  usuario:
-                    username,
+</div>
 
-                  monto:
-                    amount,
 
-                  canal:
-                    channel
-                }
-              );
+<div class="card-footer">
 
+Promo ${escapeHTML(data.channel || "WhatsApp")}
+•
+${escapeHTML(
+data.dateTime ||
+new Date().toLocaleString("es-AR")
+)}
 
-            $("purchaseResult")
-              .innerHTML =
-              createPurchaseCard(
-                result
-              );
+</div>
 
+</div>
 
-            $("purchaseUser")
-              .value = "";
+`;
 
+}
 
-            $("purchaseAmount")
-              .value = "";
 
+function showTicketModal(
+title,
+data,
+type="comprobante"
+){
 
-            updateSystemStatus();
+APP.currentCardTitle=title;
 
+APP.currentCardFile=
+`solcito-${type}-${Date.now()}`;
 
-          } catch (error) {
+$("modalTitle").textContent=title;
 
-            showToast(
-              error.message
-            );
+$("modalContent").innerHTML =
+buildTicketCard(data);
 
-          }
+$("modalBg").classList.remove("hidden");
 
-        }
-      );
+}
 
 
-    /*
-     * =====================================================
-     * TARJETA DE COMPRA
-     * =====================================================
-     */
+/* =====================================================
+   CANJES
+===================================================== */
 
-    function createPurchaseCard(data) {
+$("benefitSelect").addEventListener(
+"change",
+event=>{
 
-      const tickets =
-        data.tickets &&
-        data.tickets.length
-          ? data.tickets.join(" · ")
-          : "SIN TICKET";
+const selected =
+event.target.value;
 
+document
+.querySelectorAll(".benefit-row")
+.forEach(row=>{
 
-      const channelLabel =
-        data.canal ===
-        "Telegram"
-          ? "PROMO TELEGRAM"
-          : "COMPRA WHATSAPP";
+row.classList.toggle(
+"active",
+row.dataset.value===selected
+);
 
+});
 
-      return `
+}
+);
 
-        <div class="ticket-card">
+$("benefitSelect").dispatchEvent(
+new Event("change")
+);
 
-          <div>
-            TICKET
-            <div class="ticket-number">
-              ${escapeHTML(tickets)}
-            </div>
-          </div>
 
+$("redeemBtn").addEventListener(
+"click",
+async ()=>{
 
-          <div class="ticket-user">
-            ${escapeHTML(data.usuario)}
-          </div>
+const usuario =
+$("redeemUser").value.trim();
 
+const benefit =
+$("benefitSelect").value;
 
-          <div class="ticket-row">
+if(!usuario){
 
-            <span>
-              <strong>
-                +${data.puntos}
-              </strong>
-              puntos
-            </span>
+showToast(
+"Seleccioná un usuario."
+);
 
-            <span>
-              ${data.puntosAcumulados}
-              puntos acumulados
-            </span>
+return;
 
-          </div>
+}
 
+try{
 
-          <div class="ticket-row">
+const result =
+await api(
+"redeem",
+{
+usuario,
+benefit
+}
+);
 
-            <span>
-              <strong>
-                +${data.participaciones}
-              </strong>
-              participaciones
-            </span>
+showTicketModal(
+"Canje realizado",
+{
+...result,
+usuario,
+channel:"Canje"
+},
+"canje"
+);
 
-            <span>
-              ${data.participacionesAcumuladas}
-              acumuladas
-            </span>
+await loadDashboard();
 
-          </div>
+}catch(error){
 
+showToast(error.message);
 
-          <div class="ticket-foot">
+}
 
-            ${channelLabel}
-            ·
-            ${escapeHTML(data.agente)}
-            ·
-            ${escapeHTML(data.fechaHora)}
+});
 
-          </div>
 
+/* =====================================================
+   BÚSQUEDA DE USUARIOS
+===================================================== */
 
-          <div class="card-actions">
+let searchTimer=null;
 
-            <button
-              class="btn"
-              onclick="savePNG(this)"
-            >
-              GUARDAR PNG
-            </button>
+$("userSearch").addEventListener(
+"input",
+event=>{
 
-            <button
-              class="btn"
-              onclick="shareCard(this)"
-            >
-              COMPARTIR
-            </button>
+clearTimeout(searchTimer);
 
-          </div>
+const query =
+event.target.value.trim();
 
-        </div>
+if(query.length<3){
 
-      `;
+$("userResults").innerHTML =
+`
+<div class="notice">
+Ingresá al menos 3 caracteres.
+</div>
+`;
 
-    }
+return;
 
+}
 
-    /*
-     * =====================================================
-     * BÚSQUEDA DE USUARIO
-     * =====================================================
-     */
+searchTimer =
+setTimeout(
+()=>searchUsers(query),
+250
+);
 
-    $("userSearch")
-      .addEventListener(
-        "input",
-        async event => {
+});
 
-          const input =
-            event.target;
 
+async function searchUsers(query){
 
-          const text =
-            input.value
-              .trim();
+try{
 
+const result =
+await api(
+"searchUsers",
+{
+q:query
+}
+);
 
-          const container =
-            $("userSuggestions");
+const users =
+result.users || [];
 
+if(!users.length){
 
-          if (text.length < 3) {
+$("userResults").innerHTML =
+`
+<div class="notice">
+No se encontraron coincidencias.
+</div>
+`;
 
-            container.innerHTML =
-              "";
+return;
 
-            return;
+}
 
-          }
+$("userResults").innerHTML =
+users
+.map(
+user=>
+`
 
+<div class="list-item">
 
-          try {
+<div>
 
-            const result =
-              await api(
-                "buscarUsuarios",
-                {
-                  texto:
-                    text
-                }
-              );
+<b>
+${escapeHTML(user.usuario)}
+</b>
 
+<div class="list-meta"
+style="text-align:left;margin-top:4px">
 
-            container.innerHTML =
+Puntos:
+${escapeHTML(user.points ?? 0)}
 
-              `<div class="suggestions">` +
+•
+Participaciones:
+${escapeHTML(user.participations ?? 0)}
 
-              result.data
-                .map(user => `
+</div>
 
-                  <div
-                    class="suggestion"
-                    data-username="${escapeHTML(user.usuario)}"
-                  >
-                    ${escapeHTML(user.usuario)}
-                    ·
-                    ${user.puntos}
-                    puntos
-                  </div>
+</div>
 
-                `)
-                .join("") +
+<button
+class="btn secondary"
+data-user-card="${escapeHTML(user.usuario)}"
+>
+Tarjeta
+</button>
 
-              `</div>`;
+</div>
 
+`
+)
+.join("");
 
-            container
-              .querySelectorAll(
-                ".suggestion"
-              )
-              .forEach(item => {
+document
+.querySelectorAll("[data-user-card]")
+.forEach(
+button=>{
 
-                item.addEventListener(
-                  "click",
-                  async () => {
+button.addEventListener(
+"click",
+()=>showUserCard(
+button.dataset.userCard
+)
+);
 
-                    const username =
-                      item.dataset.username;
+}
+);
 
+}catch(error){
 
-                    input.value =
-                      username;
+showToast(error.message);
 
+}
 
-                    container.innerHTML =
-                      "";
+}
 
 
-                    try {
+async function showUserCard(usuario){
 
-                      const user =
-                        await api(
-                          "resumenUsuario",
-                          {
-                            usuario:
-                              username
-                          }
-                        );
+try{
 
+const data =
+await api(
+"userCard",
+{
+usuario
+}
+);
 
-                      $("userResult")
-                        .innerHTML =
-                        createUserCard(
-                          user
-                        );
+const html = `
 
+<div
+id="exportCard"
+class="premium-card"
+>
 
-                    } catch (error) {
+<div class="ticket-top">
+<span>
+USUARIO
+</span>
 
-                      showToast(
-                        error.message
-                      );
+<span>
+CONSULTA
+</span>
+</div>
 
-                    }
+<div class="card-name">
+${escapeHTML(data.usuario)}
+</div>
 
-                  }
-                );
+<div class="card-line">
+<span>Agente</span>
+<span>
+${escapeHTML(data.agent || "Solcito")}
+</span>
+</div>
 
-              });
+<div class="card-line">
+<span>Puntos</span>
+<strong>
+${escapeHTML(data.points ?? 0)}
+</strong>
+</div>
 
+<div class="card-line">
+<span>Participaciones</span>
+<strong>
+${escapeHTML(data.participations ?? 0)}
+</strong>
+</div>
 
-          } catch (error) {
+<div class="card-footer">
+Consulta realizada:
+${escapeHTML(
+data.dateTime ||
+new Date().toLocaleString("es-AR")
+)}
+</div>
 
-            showToast(
-              error.message
-            );
+</div>
+`;
 
-          }
+APP.currentCardTitle =
+"Consulta de usuario";
 
-        }
-      );
+APP.currentCardFile =
+`usuario-${Date.now()}`;
 
+$("modalTitle").textContent =
+"Consulta de usuario";
 
-    /*
-     * =====================================================
-     * TARJETA DE USUARIO
-     * =====================================================
-     */
+$("modalContent").innerHTML =
+html;
 
-    function createUserCard(data) {
+$("modalBg").classList.remove(
+"hidden"
+);
 
-      const now =
-        new Date()
-          .toLocaleString(
-            "es-AR"
-          );
+}catch(error){
 
+showToast(error.message);
 
-      return `
+}
 
-        <div class="ticket-card">
+}
 
-          <div class="ticket-user">
-            ${escapeHTML(data.usuario)}
-          </div>
 
+/* =====================================================
+   TICKETS RECIENTES
+===================================================== */
 
-          <div class="ticket-row">
+function renderTickets(tickets){
 
-            <span>
-              Puntos
-            </span>
+$("ticketList").innerHTML =
+tickets
+.map(
+ticket=>
+`
 
-            <strong>
-              ${data.puntos}
-            </strong>
+<div class="list-item">
 
-          </div>
+<div>
 
+<span class="ticket-number">
+#${escapeHTML(ticket.ticket)}
+</span>
 
-          <div class="ticket-row">
+&nbsp;
 
-            <span>
-              Participaciones
-            </span>
+${escapeHTML(ticket.usuario || "")}
 
-            <strong>
-              ${data.participaciones}
-            </strong>
+</div>
 
-          </div>
+<div class="list-meta">
 
+${escapeHTML(
+ticket.dateTime || ""
+)}
 
-          <div class="ticket-foot">
+</div>
 
-            Consulta realizada ·
-            ${now}
+</div>
 
-          </div>
+`
+)
+.join("")
+||
+`
+<div class="notice">
+No hay tickets para mostrar.
+</div>
+`;
 
+}
 
-          <div class="card-actions">
 
-            <button
-              class="btn"
-              onclick="savePNG(this)"
-            >
-              GUARDAR PNG
-            </button>
+$("moreTicketsBtn").addEventListener(
+"click",
+async ()=>{
 
-            <button
-              class="btn"
-              onclick="shareCard(this)"
-            >
-              COMPARTIR
-            </button>
+APP.ticketPage++;
 
-          </div>
+try{
 
-        </div>
+const result =
+await api(
+"recentTickets",
+{
+page:APP.ticketPage,
+limit:15,
+query:$("ticketSearch").value.trim()
+}
+);
 
-      `;
+renderTickets(
+result.tickets || []
+);
 
-    }
+if(
+(result.totalShown || 0)>=75
+){
 
+$("moreTicketsBtn").disabled=true;
 
-    /*
-     * =====================================================
-     * RESALTAR CANJE
-     * =====================================================
-     */
+}
 
-    $("benefitSelect")
-      .addEventListener(
-        "change",
-        event => {
+}catch(error){
 
-          const value =
-            event.target.value;
+showToast(error.message);
 
+}
 
-          document
-            .querySelectorAll(
-              ".benefit-table tbody tr"
-            )
-            .forEach(row => {
+});
 
-              row.classList.toggle(
-                "selected",
-                row.dataset.benefit ===
-                value
-              );
 
-            });
+$("ticketSearch").addEventListener(
+"input",
+()=>{
 
-        }
-      );
+clearTimeout(
+window.__ticketSearchTimer
+);
 
+window.__ticketSearchTimer =
+setTimeout(
+async ()=>{
 
-    /*
-     * =====================================================
-     * REALIZAR CANJE
-     * =====================================================
-     */
+try{
 
-    $("redeemButton")
-      .addEventListener(
-        "click",
-        async () => {
+APP.ticketPage=0;
 
-          const username =
-            $("redeemUser")
-              .value
-              .trim();
+const result =
+await api(
+"recentTickets",
+{
+page:0,
+limit:15,
+query:$("ticketSearch").value.trim()
+}
+);
 
+renderTickets(
+result.tickets || []
+);
 
-          const benefit =
-            $("benefitSelect")
-              .value;
+$("moreTicketsBtn").disabled=false;
 
+}catch(error){
 
-          if (!username) {
+}
 
-            showToast(
-              "Ingresá el nombre del usuario."
-            );
+},
+250
+);
 
-            return;
+});
 
-          }
 
+/* =====================================================
+   GANADORES
+===================================================== */
 
-          if (!benefit) {
+function renderWinners(winners){
 
-            showToast(
-              "Seleccioná un beneficio."
-            );
+$("winnerList").innerHTML =
+winners
+.map(
+winner=>
+`
 
-            return;
+<div class="list-item">
 
-          }
+<div>
 
+<b>
+${escapeHTML(
+winner.usuario || "—"
+)}
+</b>
 
-          try {
+<div class="list-meta"
+style="text-align:left;margin-top:4px">
 
-            const result =
-              await api(
-                "realizarCanje",
-                {
-                  usuario:
-                    username,
+Ticket #
+${escapeHTML(
+winner.ticket || "—"
+)}
 
-                  beneficio:
-                    benefit
-                }
-              );
+</div>
 
+</div>
 
-            $("redeemResult")
-              .innerHTML =
-              createRedeemCard(
-                result
-              );
+<div class="list-meta">
 
+${escapeHTML(
+winner.period || ""
+)}
 
-          } catch (error) {
+</div>
 
-            showToast(
-              error.message
-            );
+</div>
 
-          }
+`
+)
+.join("")
+||
+`
+<div class="notice">
+Todavía no hay ganadores registrados.
+</div>
+`;
 
-        }
-      );
+}
 
 
-    /*
-     * =====================================================
-     * TARJETA DE CANJE
-     * =====================================================
-     */
+/* =====================================================
+   SORTEO
+===================================================== */
 
-    function createRedeemCard(data) {
+$("drawBtn").addEventListener(
+"click",
+async ()=>{
 
-      let content = "";
+const confirmed =
+confirm(
+"¿Confirmás realizar el único sorteo de esta semana?"
+);
 
+if(!confirmed){
+return;
+}
 
-      if (data.cupon) {
+try{
 
-        content = `
+const result =
+await api(
+"drawWinner"
+);
 
-          <div>
-            <strong>
-              CUPÓN 20%
-            </strong>
-          </div>
+const html = `
 
+<div
+id="exportCard"
+class="premium-card"
+>
 
-          <div class="ticket-row">
+<div class="ticket-top">
 
-            <span>
-              Canje realizado
-            </span>
+<span>
+PREMIO
+</span>
 
-            <strong>
-              ${escapeHTML(data.fechaHora)}
-            </strong>
+<span class="ticket-numbers">
+$100.000
+</span>
 
-          </div>
+</div>
 
 
-          <div class="ticket-row">
+<div class="card-name">
+${escapeHTML(
+result.usuario || "—"
+)}
+</div>
 
-            <span>
-              Vencimiento
-            </span>
 
-            <strong>
-              ${escapeHTML(
-                data.cupon.vencimiento
-              )}
-            </strong>
+<div class="card-line">
 
-          </div>
+<span>
+Ticket ganador
+</span>
 
-        `;
+<strong class="ticket-numbers">
+#${escapeHTML(
+result.ticket || "—"
+)}
+</strong>
 
-      } else {
+</div>
 
-        content = `
 
-          <div>
-            <strong>
-              TENÉS
-              ${data.participaciones}
-              PARTICIPACIONES EXTRA
-            </strong>
-          </div>
+<div class="card-line">
 
+<span>
+Agente
+</span>
 
-          <div class="ticket-number">
+<span>
+${escapeHTML(
+result.agent || "Solcito"
+)}
+</span>
 
-            TICKETS
-            ${data.tickets.join(" · ")}
+</div>
 
-          </div>
 
+<div class="card-line">
 
-          <div class="ticket-row">
+<span>
+Fecha y hora del ticket
+</span>
 
-            <span>
-              Sorteo
-            </span>
+<span>
+${escapeHTML(
+result.ticketDateTime || "—"
+)}
+</span>
 
-            <strong>
-              Próximo sorteo
-            </strong>
+</div>
 
-          </div>
 
-        `;
+<div class="card-footer">
 
-      }
+${escapeHTML(
+result.period ||
+"Sorteo semanal"
+)}
 
+</div>
 
-      return `
+</div>
 
-        <div class="ticket-card">
+`;
 
-          <div class="ticket-user">
+APP.currentCardTitle =
+"🏆 GANADOR DEL SORTEO";
 
-            ${escapeHTML(
-              data.usuario
-            )}
+APP.currentCardFile =
+`ganador-${Date.now()}`;
 
-          </div>
+$("modalTitle").textContent =
+APP.currentCardTitle;
 
+$("modalContent").innerHTML =
+html;
 
-          ${content}
+$("modalBg").classList.remove(
+"hidden"
+);
 
+APP.locked=true;
 
-          <div class="ticket-foot">
+applyLockState();
 
-            ${data.puntosRestantes}
-            puntos restantes
-            ·
-            ${escapeHTML(
-              data.fechaHora
-            )}
+await loadDashboard();
 
-          </div>
+}catch(error){
 
+showToast(error.message);
 
-          <div class="card-actions">
+}
 
-            <button
-              class="btn"
-              onclick="savePNG(this)"
-            >
-              GUARDAR PNG
-            </button>
+});
 
-            <button
-              class="btn"
-              onclick="shareCard(this)"
-            >
-              COMPARTIR
-            </button>
 
-          </div>
+/* =====================================================
+   REAPERTURA
+===================================================== */
 
-        </div>
+$("reopenBtn").addEventListener(
+"click",
+async ()=>{
 
-      `;
+const confirmed =
+confirm(
+"¿Confirmás habilitar nuevamente la entrega de tickets?"
+);
 
-    }
+if(!confirmed){
+return;
+}
 
+try{
 
-    /*
-     * =====================================================
-     * SORTEO
-     * =====================================================
-     */
+await api(
+"reopenTickets"
+);
 
-    $("drawButton")
-      .addEventListener(
-        "click",
-        () => {
+APP.locked=false;
 
-          authorizationAction =
-            "draw";
+applyLockState();
 
+await loadDashboard();
 
-          openAuthorizationModal();
+showToast(
+"Entrega de tickets habilitada."
+);
 
-        }
-      );
+}catch(error){
 
+showToast(error.message);
 
-    $("reopenButton")
-      .addEventListener(
-        "click",
-        () => {
+}
 
-          authorizationAction =
-            "reopen";
+});
 
 
-          openAuthorizationModal();
+/* =====================================================
+   CERRAR MODAL
+===================================================== */
 
-        }
-      );
+$("closeModal").addEventListener(
+"click",
+()=>{
 
+$("modalBg").classList.add(
+"hidden"
+);
 
-    function openAuthorizationModal() {
+}
+);
 
-      $("adminPassword")
-        .value = "";
 
+$("modalBg").addEventListener(
+"click",
+event=>{
 
-      if (
-        authorizationAction ===
-        "draw"
-      ) {
+if(
+event.target === $("modalBg")
+){
 
-        $("modalTitle")
-          .textContent =
-          "Autorizar sorteo";
+$("modalBg").classList.add(
+"hidden"
+);
 
-      } else {
+}
 
-        $("modalTitle")
-          .textContent =
-          "Autorizar reapertura";
+}
+);
 
-      }
 
+/* =====================================================
+   GUARDAR PNG
+===================================================== */
 
-      $("authorizationModal")
-        .classList
-        .add("show");
+$("savePngBtn").addEventListener(
+"click",
+async ()=>{
 
+const card =
+$("exportCard");
 
-      setTimeout(
-        () =>
-          $("adminPassword")
-            .focus(),
-        50
-      );
+if(!card){
 
-    }
+showToast(
+"No hay tarjeta para guardar."
+);
 
+return;
 
-    $("cancelAuthorization")
-      .addEventListener(
-        "click",
-        () => {
+}
 
-          $("authorizationModal")
-            .classList
-            .remove("show");
+/*
+Generamos una imagen horizontal tipo ticket.
+No dependemos de librerías externas.
+*/
 
-        }
-      );
+const width=1200;
+const height=500;
 
+const canvas =
+document.createElement("canvas");
 
-    $("confirmAuthorization")
-      .addEventListener(
-        "click",
-        async () => {
+canvas.width=width;
+canvas.height=height;
 
-          const password =
-            $("adminPassword")
-              .value;
+const ctx =
+canvas.getContext("2d");
 
+ctx.fillStyle="#17101f";
+ctx.fillRect(
+0,
+0,
+width,
+height
+);
 
-          if (!password) {
+/* borde */
 
-            showToast(
-              "Ingresá la contraseña."
-            );
+ctx.strokeStyle="#d9dde4";
+ctx.lineWidth=5;
 
-            return;
+ctx.strokeRect(
+8,
+8,
+width-16,
+height-16
+);
 
-          }
+/* título */
 
+ctx.fillStyle="#ffffff";
 
-          try {
+ctx.font=
+"800 30px Arial";
 
-            if (
-              authorizationAction ===
-              "draw"
-            ) {
+ctx.fillText(
+"SOLCITO MAYU PLAY",
+45,
+55
+);
 
-              const result =
-                await api(
-                  "ejecutarSorteo",
-                  {
-                    password:
-                      password
-                  }
-                );
+ctx.fillStyle="#c5a8ff";
 
+ctx.font=
+"900 42px Arial";
 
-              $("drawResult")
-                .innerHTML =
-                createWinnerCard(
-                  result
-                );
+ctx.fillText(
+"COMPROBANTE",
+45,
+105
+);
 
 
-              launchConfetti();
+/* contenido */
 
+const lines =
+card.innerText
+.split("\n")
+.map(
+line=>line.trim()
+)
+.filter(Boolean);
 
-            } else {
+let y=165;
 
-              await api(
-                "habilitarRegistro",
-                {
-                  password:
-                    password
-                }
-              );
+ctx.fillStyle="#ffffff";
 
+ctx.font=
+"600 27px Arial";
 
-              showToast(
-                "Registro de tickets habilitado."
-              );
+for(
+const line of lines
+){
 
-            }
+if(
+y>height-45
+)break;
 
+ctx.fillText(
+line.substring(0,65),
+45,
+y
+);
 
-            $("authorizationModal")
-              .classList
-              .remove("show");
+y+=42;
 
+}
 
-            updateSystemStatus();
 
-            loadWinners();
+/* descarga */
 
+canvas.toBlob(
+blob=>{
 
-          } catch (error) {
+if(!blob){
 
-            showToast(
-              error.message
-            );
+showToast(
+"No se pudo generar el PNG."
+);
 
-          }
+return;
 
-        }
-      );
+}
 
+const url =
+URL.createObjectURL(blob);
 
-    /*
-     * =====================================================
-     * TARJETA GANADOR
-     * =====================================================
-     */
+const link =
+document.createElement("a");
 
-    function createWinnerCard(data) {
+link.href=url;
 
-      return `
+link.download =
+APP.currentCardFile+
+".png";
 
-        <div class="winner-card">
+document.body.appendChild(link);
 
-          <div class="winner-trophy">
-            🏆
-          </div>
+link.click();
 
+link.remove();
 
-          <div class="winner-title">
-            GANADOR DEL SORTEO
-          </div>
+setTimeout(
+()=>URL.revokeObjectURL(url),
+1000
+);
 
+},
+"image/png"
+);
 
-          <div class="winner-name">
-            ${escapeHTML(
-              data.ganador
-            )}
-          </div>
+});
 
 
-          <div class="winner-ticket">
+/* =====================================================
+   COMPARTIR
+===================================================== */
 
-            TICKET Nº
-            ${escapeHTML(
-              data.ticket
-            )}
+$("shareBtn").addEventListener(
+"click",
+async ()=>{
 
-          </div>
+const card =
+$("exportCard");
 
+if(!card){
 
-          <div class="winner-prize">
+showToast(
+"No hay tarjeta para compartir."
+);
 
-            PREMIO
-            $100.000
+return;
 
-          </div>
+}
 
+const text =
+card.innerText.trim();
 
-          <div class="ticket-foot">
 
-            Agente:
-            ${escapeHTML(
-              data.agente
-            )}
+/*
+En móviles que soportan Web Share,
+se abre directamente el menú de compartir.
 
-            ·
+Si el navegador no permite compartir archivos,
+se comparte/copía el texto.
+*/
 
-            Ticket entregado:
-            ${escapeHTML(
-              data.fechaTicket
-            )}
+try{
 
-            ·
+if(
+navigator.share
+){
 
-            ${escapeHTML(
-              data.duracion
-            )}
+await navigator.share(
+{
+title:
+APP.currentCardTitle ||
+"Solcito Mayu Play",
 
-            ·
+text
+}
+);
 
-            Sorteado:
-            ${escapeHTML(
-              data.sorteadoEn
-            )}
+return;
 
-          </div>
+}
 
+if(
+navigator.clipboard
+){
 
-          <div class="card-actions">
+await navigator.clipboard.writeText(
+text
+);
 
-            <button
-              class="btn"
-              onclick="savePNG(this)"
-            >
-              GUARDAR PNG
-            </button>
+showToast(
+"Comprobante copiado. Podés pegarlo en WhatsApp."
+);
 
-            <button
-              class="btn"
-              onclick="shareCard(this)"
-            >
-              COMPARTIR
-            </button>
+return;
 
-          </div>
+}
 
-        </div>
+showToast(
+"Este navegador no permite compartir directamente."
+);
 
-      `;
+}catch(error){
 
-    }
+}
 
+});
 
-    /*
-     * =====================================================
-     * GANADORES ANTERIORES
-     * =====================================================
-     */
 
-    async function loadWinners() {
+/* =====================================================
+   INICIO
+===================================================== */
 
-      try {
+updatePurchasePreview();
 
-        const result =
-          await api(
-            "ganadores"
-          );
-
-
-        const container =
-          $("winnersList");
-
-
-        if (
-          !result.data ||
-          result.data.length === 0
-        ) {
-
-          container.innerHTML =
-            `<div class="status">
-              Todavía no hay ganadores registrados.
-            </div>`;
-
-          return;
-
-        }
-
-
-        container.innerHTML =
-
-          result.data
-            .map(winner => `
-
-              <div
-                class="ticket-card"
-              >
-
-                <div
-                  class="ticket-number"
-                >
-                  TICKET Nº
-                  ${escapeHTML(
-                    winner.ticket
-                  )}
-                </div>
-
-
-                <div
-                  class="ticket-user"
-                >
-                  ${escapeHTML(
-                    winner.usuario
-                  )}
-                </div>
-
-
-                <div
-                  class="ticket-row"
-                >
-
-                  <span>
-                    Agente
-                  </span>
-
-                  <strong>
-                    ${escapeHTML(
-                      winner.agente
-                    )}
-                  </strong>
-
-                </div>
-
-
-                <div
-                  class="ticket-row"
-                >
-
-                  <span>
-                    Premio
-                  </span>
-
-                  <strong>
-                    $100.000
-                  </strong>
-
-                </div>
-
-
-                <div
-                  class="ticket-foot"
-                >
-                  Ticket entregado:
-                  ${escapeHTML(
-                    winner.fechaTicket
-                  )}
-                  ·
-                  ${escapeHTML(
-                    winner.duracion
-                  )}
-                </div>
-
-              </div>
-
-            `)
-            .join("");
-
-      } catch (error) {
-
-        console.log(
-          "No se pudo cargar ganadores",
-          error
-        );
-
-      }
-
-    }
-
-
-    /*
-     * =====================================================
-     * GENERACIÓN PNG
-     *
-     * html2canvas se carga solamente cuando
-     * el usuario solicita guardar/compartir.
-     * =====================================================
-     */
-
-    function loadHtml2Canvas() {
-
-      return new Promise(
-        (resolve, reject) => {
-
-          if (
-            window.html2canvas
-          ) {
-
-            resolve();
-
-            return;
-
-          }
-
-
-          const script =
-            document.createElement(
-              "script"
-            );
-
-
-          script.src =
-            "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
-
-
-          script.onload =
-            resolve;
-
-
-          script.onerror =
-            reject;
-
-
-          document.head.appendChild(
-            script
-          );
-
-        }
-      );
-
-    }
-
-
-    async function createCardImage(button) {
-
-      await loadHtml2Canvas();
-
-
-      const card =
-        button.closest(
-          ".ticket-card, .winner-card"
-        );
-
-
-      return await html2canvas(
-        card,
-        {
-          backgroundColor:
-            null,
-
-          scale: 2,
-
-          useCORS: true
-        }
-      );
-
-    }
-
-
-    /*
-     * =====================================================
-     * GUARDAR PNG
-     * =====================================================
-     */
-
-    async function savePNG(button) {
-
-      try {
-
-        const canvas =
-          await createCardImage(
-            button
-          );
-
-
-        const link =
-          document.createElement(
-            "a"
-          );
-
-
-        link.download =
-          "solcito-mayu-play.png";
-
-
-        link.href =
-          canvas.toDataURL(
-            "image/png"
-          );
-
-
-        link.click();
-
-
-      } catch (error) {
-
-        showToast(
-          "No se pudo generar la imagen."
-        );
-
-      }
-
-    }
-
-
-    /*
-     * =====================================================
-     * COMPARTIR
-     * =====================================================
-     */
-
-    async function shareCard(button) {
-
-      try {
-
-        const canvas =
-          await createCardImage(
-            button
-          );
-
-
-        const blob =
-          await new Promise(
-            resolve =>
-              canvas.toBlob(
-                resolve,
-                "image/png"
-              )
-          );
-
-
-        const file =
-          new File(
-            [
-              blob
-            ],
-            "solcito-mayu-play.png",
-            {
-              type:
-                "image/png"
-            }
-          );
-
-
-        /*
-         * En teléfonos compatibles,
-         * abre el menú nativo de compartir.
-         */
-
-        if (
-          navigator.share &&
-          navigator.canShare &&
-          navigator.canShare({
-            files: [file]
-          })
-        ) {
-
-          await navigator.share({
-
-            title:
-              "Solcito Mayu Play",
-
-            files: [
-              file
-            ]
-
-          });
-
-
-          return;
-
-        }
-
-
-        /*
-         * Si el navegador no permite
-         * compartir archivos:
-         * abre la imagen.
-         */
-
-        const imageURL =
-          URL.createObjectURL(
-            blob
-          );
-
-
-        window.open(
-          imageURL,
-          "_blank"
-        );
-
-
-      } catch (error) {
-
-        /*
-         * Si el usuario canceló
-         * el menú de compartir,
-         * no mostramos error.
-         */
-
-        if (
-          error.name !==
-          "AbortError"
-        ) {
-
-          showToast(
-            "Este navegador no permite compartir la imagen directamente."
-          );
-
-        }
-
-      }
-
-    }
-
-
-    /*
-     * =====================================================
-     * CONFETI
-     * =====================================================
-     */
-
-    function launchConfetti() {
-
-      const amount = 80;
-
-
-      for (
-        let i = 0;
-        i < amount;
-        i++
-      ) {
-
-        const piece =
-          document.createElement(
-            "div"
-          );
-
-
-        piece.style.position =
-          "fixed";
-
-
-        piece.style.width =
-          "7px";
-
-
-        piece.style.height =
-          "12px";
-
-
-        piece.style.background =
-          i % 2
-            ? "#a96cff"
-            : "#e2e5e9";
-
-
-        piece.style.left =
-          Math.random() * 100 +
-          "%";
-
-
-        piece.style.top =
-          "-20px";
-
-
-        piece.style.zIndex =
-          "300";
-
-
-        piece.style.borderRadius =
-          "2px";
-
-
-        document.body
-          .appendChild(
-            piece
-          );
-
-
-        const duration =
-          1800 +
-          Math.random() * 1800;
-
-
-        piece.animate(
-
-          [
-            {
-              transform:
-                "translateY(0) rotate(0deg)",
-
-              opacity: 1
-            },
-
-            {
-              transform:
-                `translateY(${window.innerHeight + 100}px) rotate(${720 + Math.random() * 720}deg)`,
-
-              opacity: 0
-            }
-          ],
-
-          {
-            duration:
-              duration,
-
-            easing:
-              "cubic-bezier(.2,.8,.3,1)"
-          }
-
-        );
-
-
-        setTimeout(
-          () =>
-            piece.remove(),
-          duration + 100
-        );
-
-      }
-
-    }
-
-
-    /*
-     * =====================================================
-     * INICIAR SESIÓN SI EXISTE TOKEN
-     * =====================================================
-     */
-
-    if (sessionToken) {
-
-      enterApplication();
-
-    }
-
-  </script>
+</script>
 
 </body>
 </html>
