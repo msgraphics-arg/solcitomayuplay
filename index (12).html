@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solcito Mayu Play</title>
+<style>
+:root{--bg:#07060a;--panel:#120d18;--panel2:#0d0a11;--chrome:#d9dce2;--line:#766587;--purple:#a96cff;--purple2:#d6b7ff;--text:#f7f4fa;--muted:#aaa4b1}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#392050 0,transparent 38%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
+.app{width:min(1180px,94%);margin:auto;padding:25px 0 55px}
+header{display:flex;align-items:center;gap:18px;margin-bottom:25px}
+.logo{font-size:65px;font-weight:950;font-style:italic;background:linear-gradient(145deg,#fff,#8b9098 50%,#25272b,#fff);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 10px #a96cff);position:relative}
+.logo:after{content:"";position:absolute;width:55px;height:35px;left:9px;top:28px;background:#a96cff55;filter:blur(17px);z-index:-1;animation:pulse 3s infinite}
+@keyframes pulse{50%{opacity:.4;transform:scale(1.15)}}
+.brand{font-size:34px;font-weight:950;letter-spacing:.5px;background:linear-gradient(90deg,#fff,#d5b2ff,#9d60f4);-webkit-background-clip:text;color:transparent}.subtitle{font-size:12px;color:var(--muted);margin-top:4px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:18px}.tab,.btn{border:1px solid #756484;background:linear-gradient(145deg,#27202e,#130d18);color:#fff;border-radius:11px;padding:12px 15px;font-weight:950}.tab.active,.tab:hover{border-color:#c19aff;box-shadow:0 0 18px #a96cff33;background:#1b1224}.section{display:none;border:2px solid var(--line);border-radius:18px;padding:20px;background:linear-gradient(145deg,#17101e,#0b080e);box-shadow:0 0 20px #a96cff26;position:relative}.section.active{display:block}.section:after{content:"";position:absolute;inset:-2px;border:1px solid #b27cff44;border-radius:18px;pointer-events:none;animation:glow 3s infinite}@keyframes glow{50%{box-shadow:0 0 18px #a96cff25}}
+h2{margin:0 0 17px;font-size:22px;font-weight:950}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-size:11px;color:#c8c2cf;font-weight:900;margin-bottom:7px}input,select{width:100%;padding:13px;border:1px solid #504657;border-radius:10px;background:#08070b;color:#fff;outline:0}input:focus,select:focus{border-color:#b184ff;box-shadow:0 0 0 3px #a96cff18}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn.primary{background:linear-gradient(145deg,#a96cff,#592c99);border-color:#d9bdff}.btn:disabled{opacity:.4;cursor:not-allowed}.status{padding:10px 12px;border:1px solid #39323f;border-radius:10px;background:#09070c;color:#bcb6c3;font-size:12px;margin-bottom:14px}.status.ok{border-color:#3e7a63;color:#91ffd1}.status.bad{border-color:#79465b;color:#ff9fbe}
+.card,.winner{background:linear-gradient(145deg,#291a35,#130c18 62%,#0b090e);border:2px solid var(--chrome);border-radius:14px;padding:17px;box-shadow:0 0 18px #a96cff35,inset 0 0 22px #fff00005}.ticketline{display:flex;gap:8px;align-items:center}.ticketnums{font-size:22px;font-weight:950;color:#d5adff;letter-spacing:.5px}.username{font-size:26px;font-weight:950;margin:10px 0}.row{display:flex;justify-content:space-between;border-top:1px solid #ffffff12;padding-top:9px;margin-top:9px}.row strong{font-weight:950}.foot{border-top:1px dashed #62566c;margin-top:12px;padding-top:10px;font-size:11px;color:#c1bac9}.card-buttons{display:flex;gap:8px;margin-top:11px}.mini{font-size:11px;padding:8px 10px}
+.result{display:grid;gap:12px;margin-top:18px}.search{margin-bottom:10px}.suggestions{background:#0b080e;border:1px solid #4b4153;border-radius:10px;overflow:hidden}.suggestion{padding:10px 12px;cursor:pointer}.suggestion:hover{background:#24182f}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}th,td{padding:10px 8px;border-bottom:1px solid #352d3b;text-align:left}th{color:#d4cedb}.selected{background:#a96cff22;box-shadow:inset 3px 0 #bd8cff}
+.winner{text-align:center;padding:25px}.cup{font-size:42px}.winner .name{font-size:32px;font-weight:950;color:#dfc4ff}.win-ticket{font-size:25px;font-weight:950}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:20px;z-index:20}.modal.show{display:grid}.modalbox{width:min(500px,100%);background:#120d18;border:2px solid var(--chrome);border-radius:17px;padding:20px;box-shadow:0 0 45px #a96cff55}
+.toast{position:fixed;right:18px;bottom:18px;background:#17101e;border:1px solid #846b9b;padding:13px 15px;border-radius:11px;display:none;z-index:50}.toast.show{display:block}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.tabs{grid-template-columns:1fr 1fr}.brand{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">S</div><div><div class="brand">Solcito Mayu Play</div><div class="subtitle">Sistema interno · puntos · participaciones · tickets · sorteos</div></div></header>
+
+<nav class="tabs">
+<button class="tab active" data-tab="registro">REGISTRAR COMPRA</button>
+<button class="tab" data-tab="usuarios">USUARIOS</button>
+<button class="tab" data-tab="canjes">CANJES</button>
+<button class="tab" data-tab="sorteo">SORTEO</button>
+</nav>
+
+<section id="registro" class="section active">
+<h2>Registrar compra</h2><div id="registroEstado" class="status">Consultando estado...</div>
+<div class="grid">
+<div class="field"><label>USUARIO</label><input id="usuarioCompra" autocomplete="off" placeholder="Escribí 3 o más caracteres"><div id="sugerenciasCompra"></div></div>
+<div class="field"><label>MONTO DE LA COMPRA</label><input id="montoCompra" type="number" min="1" placeholder="$ 0"></div>
+</div>
+<div class="field" style="margin-top:14px"><label>CANAL</label><select id="canalCompra"><option>WhatsApp</option><option>Telegram</option></select></div>
+<div class="actions"><button class="btn primary" id="registrarBtn">GENERAR PARTICIPACIONES</button></div>
+<div id="registroResultado" class="result"></div>
+</section>
+
+<section id="usuarios" class="section">
+<h2>Buscar usuario</h2><div class="field"><label>BUSCAR DESDE EL TERCER CARÁCTER</label><input id="busquedaUsuario" autocomplete="off" placeholder="Nombre, número o combinación"></div>
+<div id="sugerenciasUsuario"></div><div id="usuarioResultado" class="result"></div>
+</section>
+
+<section id="canjes" class="section">
+<h2>Canjes</h2>
+<div class="grid"><div class="field"><label>USUARIO</label><input id="usuarioCanje" autocomplete="off" placeholder="Buscar usuario"><div id="sugerenciasCanje"></div></div>
+<div class="field"><label>BENEFICIO</label><select id="beneficioCanje"><option value="">Seleccionar beneficio</option><option value="1">1 participación — 100 puntos</option><option value="3">3 participaciones — 275 puntos</option><option value="7">7 participaciones — 600 puntos</option><option value="coupon">Cupón 20% — 300 puntos</option></select></div></div>
+<div class="actions"><button class="btn primary" id="canjearBtn">REALIZAR CANJE</button></div>
+<table id="tablaCanjes"><thead><tr><th>BENEFICIO</th><th>PUNTOS</th><th>PARTICIPACIONES</th></tr></thead><tbody>
+<tr data-beneficio="1"><td>1 participación</td><td><strong>100</strong></td><td>1</td></tr>
+<tr data-beneficio="3"><td>3 participaciones</td><td><strong>275</strong></td><td>3</td></tr>
+<tr data-beneficio="7"><td>7 participaciones</td><td><strong>600</strong></td><td>7</td></tr>
+<tr data-beneficio="coupon"><td>Cupón 20%</td><td><strong>300</strong></td><td>—</td></tr>
+</tbody></table>
+<div id="canjeResultado" class="result"></div>
+</section>
+
+<section id="sorteo" class="section">
+<h2>Sorteo semanal</h2><div id="sorteoEstado" class="status">Consultando estado...</div>
+<div class="grid"><div><div class="status"><strong>Premio:</strong> $100.000<br><strong>Bloqueo:</strong> sábados 19:59<br><strong>Registro:</strong> se reabre únicamente con autorización.</div>
+<button class="btn primary" id="sortearBtn">🏆 SORTEAR ÚNICO GANADOR</button><br><button class="btn" id="habilitarBtn" style="margin-top:9px">HABILITAR REGISTRO DE TICKETS</button></div>
+<div><h3>Registro semanal de ganadores</h3><div id="ganadoresLista" class="result"></div></div></div>
+<div id="sorteoResultado" class="result"></div>
+</section>
+</div>
+
+<div id="modal" class="modal"><div class="modalbox"><h2 id="modalTitle">Autorización</h2><div class="field"><label>CONTRASEÑA</label><input id="password" type="password"></div><div class="actions"><button class="btn primary" id="modalConfirm">CONFIRMAR</button><button class="btn" id="modalClose">CANCELAR</button></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+/* Pegá aquí la URL de tu Web App de Google Apps Script. */
+const API_URL='PEGAR_AQUI_URL_DE_TU_APPS_SCRIPT';
+const $=id=>document.getElementById(id);
+let modalAction=null;
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),3200)}
+async function api(accion,extra={}){if(API_URL.includes('PEGAR_AQUI'))throw Error('Falta colocar la URL de la Web App de Apps Script en API_URL.');const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({accion,...extra})});const d=await r.json();if(!d.ok)throw Error(d.error||'Error del servidor');return d}
+function money(n){return '$ '+Number(n||0).toLocaleString('es-AR')}
+
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.tab).classList.add('active')});
+
+async function estado(){try{let d=await api('estadoSistema'),open=d.estado==='ABIERTO';$('registroEstado').className='status '+(open?'ok':'bad');$('registroEstado').textContent=open?'● REGISTRO ABIERTO':'● REGISTRO CERRADO — requiere autorización';$('sorteoEstado').className='status '+(open?'ok':'bad');$('sorteoEstado').textContent=open?'Registro abierto.':'Registro cerrado. Se requiere autorización para reabrir.';$('registrarBtn').disabled=!open}catch(e){$('registroEstado').className='status bad';$('registroEstado').textContent=e.message}}
+
+function buttons(){return '<div class="card-buttons"><button class="btn mini" onclick="savePNG(this)">GUARDAR PNG</button><button class="btn mini" onclick="shareCard(this)">COMPARTIR</button></div>'}
+function compraCard(d){let canal=d.canal==='Telegram'?'PROMO TELEGRAM':'COMPRA WHATSAPP';return `<div class="card"><div class="ticketline">TICKET <span class="ticketnums">${(d.tickets||[]).join(' · ')}</span></div><div class="username">${esc(d.usuario)}</div><div class="row"><span><strong>+${d.puntos}</strong> puntos</span><span>${d.puntosAcumulados} acumulados</span></div><div class="row"><span><strong>+${d.participaciones}</strong> participaciones</span><span>${d.participacionesAcumuladas} acumuladas</span></div><div class="foot">${canal} · ${esc(d.agente)} · ${esc(d.fechaHora)}</div>${buttons()}</div>`}
+function canjeCard(d){return `<div class="card"><div class="ticketline">${d.cupon?'CANJE CONFIRMADO':'PARTICIPACIONES EXTRA'}</div><div class="username">${esc(d.usuario)}</div>${d.cupon?`<div class="row"><strong>CUPÓN ${d.cupon.porcentaje}%</strong><span>${d.puntosRestantes} puntos restantes</span></div><div class="row"><span>Canje</span><strong>${esc(d.fechaHora)}</strong></div><div class="row"><span>Vence</span><strong>${esc(d.cupon.vencimiento)}</strong></div>`:`<div class="row"><span><strong>+${d.participaciones}</strong> participaciones</span><span>${d.puntosRestantes} puntos restantes</span></div><div class="ticketline" style="margin-top:12px">TICKETS <span class="ticketnums">${(d.tickets||[]).join(' · ')}</span></div><div class="foot">Sorteo del período vigente · ${esc(d.fechaHora)}</div>`}${buttons()}</div>`}
+function ganadorCard(d){return `<div class="winner"><div class="cup">🏆</div><div class="small">GANADOR · PREMIO ${money(d.premio)}</div><div class="name">${esc(d.ganador)}</div><div class="win-ticket">TICKET Nº ${esc(d.ticket)}</div><div class="small">Agente: ${esc(d.agente)} · Entregado: ${esc(d.fechaTicket)}</div><div class="small">Período: ${esc(d.duracion)} · Sorteado: ${esc(d.sorteadoEn)}</div>${buttons()}</div>`}
+function userCard(d){return `<div class="card"><div class="username">${esc(d.usuario)}</div><div class="row"><span>Puntos</span><strong>${d.puntos}</strong></div><div class="row"><span>Participaciones</span><strong>${d.participaciones}</strong></div><div class="foot">Consulta · ${new Date().toLocaleString('es-AR')}</div>${buttons()}</div>`}
+
+$('registrarBtn').onclick=async()=>{let usuario=$('usuarioCompra').value.trim(),monto=Number($('montoCompra').value),canal=$('canalCompra').value;if(!usuario||!monto)return toast('Completá usuario y monto.');try{$('registroResultado').innerHTML=compraCard(await api('registrarCompra',{usuario,monto,canal}));$('usuarioCompra').value='';$('montoCompra').value='';toast('Compra registrada.');estado()}catch(e){toast(e.message)}};
+
+async function suggestions(q,target){if(q.trim().length<3){$(target).innerHTML='';return}try{let rows=await api('buscarUsuarios',{texto:q});$(target).innerHTML=rows.map(x=>`<div class="suggestions"><div class="suggestion" data-u="${esc(x.usuario)}"><strong>${esc(x.usuario)}</strong> · ${x.puntos} puntos · ${x.participaciones} participaciones</div></div>`).join('');$(target).querySelectorAll('.suggestion').forEach(x=>x.onclick=()=>{$('usuarioCompra').value=x.dataset.u;$('usuarioCanje').value=x.dataset.u;$('busquedaUsuario').value=x.dataset.u;$(target).innerHTML=''})}catch(e){toast(e.message)}}
+$('usuarioCompra').oninput=e=>suggestions(e.target.value,'sugerenciasCompra');$('usuarioCanje').oninput=e=>suggestions(e.target.value,'sugerenciasCanje');
+
+let timer;$('busquedaUsuario').oninput=e=>{clearTimeout(timer);timer=setTimeout(async()=>{let q=e.target.value.trim();if(q.length<3)return $('sugerenciasUsuario').innerHTML='';try{let rows=await api('buscarUsuarios',{texto:q});$('sugerenciasUsuario').innerHTML=rows.map(x=>`<div class="suggestions"><div class="suggestion" data-u="${esc(x.usuario)}">${esc(x.usuario)} · ${x.puntos} puntos · ${x.participaciones} participaciones</div></div>`).join('');$('sugerenciasUsuario').querySelectorAll('.suggestion').forEach(x=>x.onclick=async()=>{let u=x.dataset.u;$('busquedaUsuario').value=u;$('sugerenciasUsuario').innerHTML='';try{$('usuarioResultado').innerHTML=userCard(await api('resumenUsuario',{usuario:u}))}catch(e){toast(e.message)}})}catch(e){toast(e.message)}},180)};
+
+$('beneficioCanje').onchange=e=>document.querySelectorAll('#tablaCanjes tbody tr').forEach(r=>r.classList.toggle('selected',r.dataset.beneficio===e.target.value));
+$('canjearBtn').onclick=async()=>{let usuario=$('usuarioCanje').value.trim(),beneficio=$('beneficioCanje').value;if(!usuario||!beneficio)return toast('Seleccioná usuario y beneficio.');try{$('canjeResultado').innerHTML=canjeCard(await api('realizarCanje',{usuario,beneficio}));$('beneficioCanje').value='';document.querySelectorAll('#tablaCanjes tbody tr').forEach(r=>r.classList.remove('selected'));toast('Canje realizado.')}catch(e){toast(e.message)}};
+
+function modal(a){modalAction=a;$('password').value='';$('modalTitle').textContent=a==='sorteo'?'Autorizar sorteo':'Autorizar reapertura de tickets';$('modal').classList.add('show');$('password').focus()}
+$('modalClose').onclick=()=>$('modal').classList.remove('show');$('sortearBtn').onclick=()=>modal('sorteo');$('habilitarBtn').onclick=()=>modal('habilitar');
+$('modalConfirm').onclick=async()=>{try{let p=$('password').value;if(!p)return toast('Ingresá la contraseña.');if(modalAction==='sorteo'){$('sorteoResultado').innerHTML=ganadorCard(await api('ejecutarSorteo',{password:p}));toast('Sorteo realizado.');ganadores()}else{await api('habilitarRegistro',{password:p});toast('Registro habilitado.')}$('modal').classList.remove('show');estado()}catch(e){toast(e.message)}};
+
+async function ganadores(){try{let rows=await api('ganadores');$('ganadoresLista').innerHTML=rows.length?rows.map(x=>`<div class="row"><div><strong>Ticket Nº ${esc(x.ticket)}</strong><br><strong>${esc(x.usuario)}</strong><br><span class="small">${esc(x.agente)} · ${esc(x.fecha)}</span></div><strong>${money(x.premio)}</strong></div>`).join(''):'<span class="muted">Sin ganadores todavía.</span>'}catch(e){$('ganadoresLista').textContent=e.message}}
+function loadCanvas(){return new Promise((ok,no)=>{let s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+async function canvasFor(btn){if(!window.html2canvas)await loadCanvas();return html2canvas(btn.closest('.card,.winner'),{backgroundColor:null,scale:2})}
+async function savePNG(btn){try{let c=await canvasFor(btn),a=document.createElement('a');a.download='solcito-mayu-play.png';a.href=c.toDataURL('image/png');a.click();toast('PNG guardado.')}catch(e){toast('No se pudo generar el PNG. '+e.message)}}
+async function shareCard(btn){try{let c=await canvasFor(btn),blob=await new Promise(r=>c.toBlob(r,'image/png')),file=new File([blob],'solcito-mayu-play.png',{type:'image/png'});if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({title:'Solcito Mayu Play',files:[file]});else{let u=URL.createObjectURL(blob);window.open(u,'_blank');toast('Se abrió la imagen para compartirla.')}}catch(e){if(e.name!=='AbortError')toast('No se pudo compartir.')}}
+
+estado();ganadores();setInterval(estado,30000);
+</script>
+</body>
+</html>
