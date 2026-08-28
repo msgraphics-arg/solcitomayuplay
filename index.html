@@ -1,123 +1,3529 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solcito Mayu Play</title>
-<style>
-:root{--bg:#07060a;--panel:#120d18;--panel2:#0d0a11;--chrome:#d9dce2;--line:#766587;--purple:#a96cff;--purple2:#d6b7ff;--text:#f7f4fa;--muted:#aaa4b1}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -15%,#392050 0,transparent 38%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
-.app{width:min(1180px,94%);margin:auto;padding:25px 0 55px}
-header{display:flex;align-items:center;gap:18px;margin-bottom:25px}
-.logo{font-size:65px;font-weight:950;font-style:italic;background:linear-gradient(145deg,#fff,#8b9098 50%,#25272b,#fff);-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 10px #a96cff);position:relative}
-.logo:after{content:"";position:absolute;width:55px;height:35px;left:9px;top:28px;background:#a96cff55;filter:blur(17px);z-index:-1;animation:pulse 3s infinite}
-@keyframes pulse{50%{opacity:.4;transform:scale(1.15)}}
-.brand{font-size:34px;font-weight:950;letter-spacing:.5px;background:linear-gradient(90deg,#fff,#d5b2ff,#9d60f4);-webkit-background-clip:text;color:transparent}.subtitle{font-size:12px;color:var(--muted);margin-top:4px}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:18px}.tab,.btn{border:1px solid #756484;background:linear-gradient(145deg,#27202e,#130d18);color:#fff;border-radius:11px;padding:12px 15px;font-weight:950}.tab.active,.tab:hover{border-color:#c19aff;box-shadow:0 0 18px #a96cff33;background:#1b1224}.section{display:none;border:2px solid var(--line);border-radius:18px;padding:20px;background:linear-gradient(145deg,#17101e,#0b080e);box-shadow:0 0 20px #a96cff26;position:relative}.section.active{display:block}.section:after{content:"";position:absolute;inset:-2px;border:1px solid #b27cff44;border-radius:18px;pointer-events:none;animation:glow 3s infinite}@keyframes glow{50%{box-shadow:0 0 18px #a96cff25}}
-h2{margin:0 0 17px;font-size:22px;font-weight:950}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-size:11px;color:#c8c2cf;font-weight:900;margin-bottom:7px}input,select{width:100%;padding:13px;border:1px solid #504657;border-radius:10px;background:#08070b;color:#fff;outline:0}input:focus,select:focus{border-color:#b184ff;box-shadow:0 0 0 3px #a96cff18}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn.primary{background:linear-gradient(145deg,#a96cff,#592c99);border-color:#d9bdff}.btn:disabled{opacity:.4;cursor:not-allowed}.status{padding:10px 12px;border:1px solid #39323f;border-radius:10px;background:#09070c;color:#bcb6c3;font-size:12px;margin-bottom:14px}.status.ok{border-color:#3e7a63;color:#91ffd1}.status.bad{border-color:#79465b;color:#ff9fbe}
-.card,.winner{background:linear-gradient(145deg,#291a35,#130c18 62%,#0b090e);border:2px solid var(--chrome);border-radius:14px;padding:17px;box-shadow:0 0 18px #a96cff35,inset 0 0 22px #fff00005}.ticketline{display:flex;gap:8px;align-items:center}.ticketnums{font-size:22px;font-weight:950;color:#d5adff;letter-spacing:.5px}.username{font-size:26px;font-weight:950;margin:10px 0}.row{display:flex;justify-content:space-between;border-top:1px solid #ffffff12;padding-top:9px;margin-top:9px}.row strong{font-weight:950}.foot{border-top:1px dashed #62566c;margin-top:12px;padding-top:10px;font-size:11px;color:#c1bac9}.card-buttons{display:flex;gap:8px;margin-top:11px}.mini{font-size:11px;padding:8px 10px}
-.result{display:grid;gap:12px;margin-top:18px}.search{margin-bottom:10px}.suggestions{background:#0b080e;border:1px solid #4b4153;border-radius:10px;overflow:hidden}.suggestion{padding:10px 12px;cursor:pointer}.suggestion:hover{background:#24182f}
-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}th,td{padding:10px 8px;border-bottom:1px solid #352d3b;text-align:left}th{color:#d4cedb}.selected{background:#a96cff22;box-shadow:inset 3px 0 #bd8cff}
-.winner{text-align:center;padding:25px}.cup{font-size:42px}.winner .name{font-size:32px;font-weight:950;color:#dfc4ff}.win-ticket{font-size:25px;font-weight:950}
-.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:20px;z-index:20}.modal.show{display:grid}.modalbox{width:min(500px,100%);background:#120d18;border:2px solid var(--chrome);border-radius:17px;padding:20px;box-shadow:0 0 45px #a96cff55}
-.toast{position:fixed;right:18px;bottom:18px;background:#17101e;border:1px solid #846b9b;padding:13px 15px;border-radius:11px;display:none;z-index:50}.toast.show{display:block}
-@media(max-width:720px){.grid{grid-template-columns:1fr}.tabs{grid-template-columns:1fr 1fr}.brand{font-size:25px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Solcito Mayu Play</title>
+
+  <style>
+    :root {
+      --bg: #07060a;
+      --bg2: #100b14;
+      --panel: #151019;
+      --panel2: #21152b;
+
+      --purple: #a96cff;
+      --purple2: #c69aff;
+      --purple3: #6f35ad;
+
+      --chrome: #e2e5e9;
+      --chrome2: #8b9098;
+
+      --white: #ffffff;
+      --text: #f7f2fc;
+      --muted: #aaa2b2;
+
+      --danger: #ff668f;
+      --success: #7dffc7;
+
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          rgba(154, 82, 220, .40),
+          transparent 38%
+        ),
+        radial-gradient(
+          circle at 90% 30%,
+          rgba(92, 42, 130, .15),
+          transparent 35%
+        ),
+        var(--bg);
+
+      color: var(--text);
+
+      font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    #loginScreen {
+      min-height: 100vh;
+
+      display: grid;
+      place-items: center;
+
+      padding: 25px;
+    }
+
+    .login-card {
+      width: min(430px, 100%);
+
+      padding: 32px;
+
+      border: 2px solid var(--chrome);
+
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(39, 24, 50, .97),
+          rgba(9, 7, 12, .98)
+        );
+
+      box-shadow:
+        0 0 20px rgba(169,108,255,.18),
+        0 0 55px rgba(169,108,255,.10),
+        inset 0 0 20px rgba(255,255,255,.025);
+
+      animation: pulseBorder 3.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseBorder {
+      0%,
+      100% {
+        box-shadow:
+          0 0 15px rgba(169,108,255,.15),
+          0 0 35px rgba(169,108,255,.06);
+      }
+
+      50% {
+        box-shadow:
+          0 0 22px rgba(169,108,255,.30),
+          0 0 60px rgba(169,108,255,.12);
+      }
+    }
+
+    .login-logo {
+      text-align: center;
+
+      font-size: 95px;
+
+      line-height: .9;
+
+      font-weight: 1000;
+
+      font-style: italic;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff 0%,
+          #bfc3c9 22%,
+          #565b63 48%,
+          #f9f9f9 65%,
+          #777d86 100%
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+
+      filter:
+        drop-shadow(0 0 8px rgba(169,108,255,.9))
+        drop-shadow(0 0 22px rgba(169,108,255,.25));
+    }
+
+    .brand {
+      text-align: center;
+
+      font-size: 31px;
+
+      font-weight: 950;
+
+      letter-spacing: -.7px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #d5b4ff,
+          #a15df2
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+    }
+
+    .login-subtitle {
+      text-align: center;
+
+      margin: 9px 0 25px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      letter-spacing: 1.3px;
+
+      font-weight: 800;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      font-size: 11px;
+
+      font-weight: 950;
+
+      letter-spacing: .6px;
+
+      color: #eee8f5;
+    }
+
+    input,
+    select {
+      width: 100%;
+
+      padding: 13px 14px;
+
+      color: var(--white);
+
+      background: #08070b;
+
+      border: 1px solid #51465b;
+
+      border-radius: 10px;
+
+      outline: none;
+
+      transition: .2s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--purple2);
+
+      box-shadow:
+        0 0 0 2px rgba(169,108,255,.10),
+        0 0 18px rgba(169,108,255,.13);
+    }
+
+    .login-error {
+      min-height: 18px;
+
+      margin-top: 9px;
+
+      color: #ff91b1;
+
+      font-size: 12px;
+
+      text-align: center;
+    }
+
+    /* =====================================================
+       GENERAL
+    ===================================================== */
+
+    .container {
+      width: min(1200px, 94%);
+
+      margin: auto;
+
+      padding:
+        22px 0 60px;
+    }
+
+    header {
+      display: flex;
+
+      align-items: center;
+
+      gap: 15px;
+
+      margin-bottom: 22px;
+    }
+
+    .header-s {
+      position: relative;
+
+      font-size: 68px;
+
+      line-height: .9;
+
+      font-weight: 1000;
+
+      font-style: italic;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff,
+          #adb2b9,
+          #3e4248,
+          #ffffff,
+          #777c84
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+
+      filter:
+        drop-shadow(0 0 7px rgba(169,108,255,.95))
+        drop-shadow(0 0 22px rgba(169,108,255,.25));
+    }
+
+    .header-title {
+      font-size: 32px;
+
+      font-weight: 950;
+
+      background:
+        linear-gradient(
+          90deg,
+          #fff,
+          #d5b5ff,
+          #9c5ce9
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+    }
+
+    .header-subtitle {
+      color: var(--muted);
+
+      font-size: 11px;
+
+      margin-top: 3px;
+    }
+
+    /* =====================================================
+       TABS
+    ===================================================== */
+
+    .tabs {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 9px;
+
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      min-height: 48px;
+
+      border-radius: 12px;
+
+      border: 2px solid #463b4f;
+
+      color: #ddd4e5;
+
+      background:
+        linear-gradient(
+          145deg,
+          #17101d,
+          #0c090e
+        );
+
+      font-weight: 950;
+
+      font-size: 11px;
+
+      transition: .25s;
+    }
+
+    .tab:hover {
+      border-color: #8561a4;
+
+      box-shadow:
+        0 0 15px rgba(169,108,255,.13);
+    }
+
+    .tab.active {
+      color: #fff;
+
+      border-color: var(--purple2);
+
+      background:
+        linear-gradient(
+          145deg,
+          #39204d,
+          #130c19
+        );
+
+      box-shadow:
+        0 0 17px rgba(169,108,255,.22);
+    }
+
+    /* =====================================================
+       SECTIONS
+    ===================================================== */
+
+    .section {
+      display: none;
+
+      position: relative;
+
+      padding: 23px;
+
+      border-radius: var(--radius);
+
+      border: 2px solid #756085;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(32,21,42,.97),
+          rgba(10,8,13,.98)
+        );
+
+      box-shadow:
+        0 0 22px rgba(169,108,255,.10),
+        inset 0 0 22px rgba(255,255,255,.018);
+
+      animation:
+        sectionPulse 4s infinite ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes sectionPulse {
+      0%,
+      100% {
+        box-shadow:
+          0 0 17px rgba(169,108,255,.08),
+          inset 0 0 20px rgba(255,255,255,.015);
+      }
+
+      50% {
+        box-shadow:
+          0 0 25px rgba(169,108,255,.18),
+          inset 0 0 22px rgba(255,255,255,.025);
+      }
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+
+      font-size: 22px;
+
+      font-weight: 950;
+
+      color: #fff;
+    }
+
+    .grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 14px;
+    }
+
+    .status {
+      padding: 11px 13px;
+
+      margin-bottom: 17px;
+
+      border-radius: 10px;
+
+      border: 1px solid #49404f;
+
+      background: #0c090f;
+
+      color: #bfb6c7;
+
+      font-size: 12px;
+
+      font-weight: 800;
+    }
+
+    .status.open {
+      color: var(--success);
+
+      border-color:
+        rgba(125,255,199,.35);
+    }
+
+    .status.closed {
+      color: #ff91b1;
+
+      border-color:
+        rgba(255,102,143,.35);
+    }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    .btn {
+      border: 1px solid #665772;
+
+      border-radius: 10px;
+
+      padding: 11px 15px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          145deg,
+          #1b1321,
+          #0d0a10
+        );
+
+      font-weight: 900;
+
+      font-size: 12px;
+
+      transition: .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+
+      border-color: var(--purple2);
+
+      box-shadow:
+        0 0 15px rgba(169,108,255,.17);
+    }
+
+    .btn-primary {
+      border-color: #c49bff;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ad6cff,
+          #622f9d
+        );
+
+      box-shadow:
+        0 0 14px rgba(169,108,255,.18);
+    }
+
+    .btn-danger {
+      border-color: #9b405c;
+
+      background:
+        linear-gradient(
+          145deg,
+          #5a1d32,
+          #210d16
+        );
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* =====================================================
+       SUGGESTIONS
+    ===================================================== */
+
+    .suggestions {
+      margin-top: 4px;
+
+      overflow: hidden;
+
+      border:
+        1px solid #51455c;
+
+      border-radius: 9px;
+
+      background: #0d0a11;
+
+      position: relative;
+
+      z-index: 10;
+    }
+
+    .suggestion {
+      padding: 10px 12px;
+
+      cursor: pointer;
+
+      border-bottom:
+        1px solid #27212d;
+
+      font-size: 12px;
+    }
+
+    .suggestion:last-child {
+      border-bottom: 0;
+    }
+
+    .suggestion:hover {
+      background:
+        rgba(169,108,255,.14);
+    }
+
+    /* =====================================================
+       PREMIUM TICKET CARD
+    ===================================================== */
+
+    .ticket-card {
+      position: relative;
+
+      margin-top: 18px;
+
+      padding: 18px;
+
+      overflow: hidden;
+
+      border-radius: 15px;
+
+      border: 2px solid var(--chrome);
+
+      background:
+        linear-gradient(
+          135deg,
+          #321744 0%,
+          #1d1027 38%,
+          #0e0912 70%,
+          #2b143d 100%
+        );
+
+      box-shadow:
+        0 0 20px rgba(169,108,255,.18),
+        inset 0 0 20px rgba(255,255,255,.025);
+    }
+
+    .ticket-card::before {
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+      left: -100%;
+
+      width: 50%;
+      height: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,.08),
+          transparent
+        );
+
+      transform: skewX(-20deg);
+
+      animation:
+        ticketShine 6s infinite;
+    }
+
+    @keyframes ticketShine {
+      0% {
+        left: -100%;
+      }
+
+      25%,
+      100% {
+        left: 150%;
+      }
+    }
+
+    .ticket-number {
+      font-size: 25px;
+
+      font-weight: 1000;
+
+      color: var(--purple2);
+
+      text-shadow:
+        0 0 10px rgba(198,154,255,.25);
+    }
+
+    .ticket-user {
+      margin: 10px 0;
+
+      font-size: 28px;
+
+      font-weight: 1000;
+
+      color: white;
+    }
+
+    .ticket-row {
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 12px;
+
+      padding-top: 9px;
+
+      margin-top: 9px;
+
+      border-top:
+        1px solid rgba(255,255,255,.09);
+
+      font-size: 12px;
+    }
+
+    .ticket-row strong {
+      font-weight: 1000;
+
+      color: #fff;
+    }
+
+    .ticket-foot {
+      padding-top: 11px;
+
+      margin-top: 11px;
+
+      border-top:
+        1px dashed #67576f;
+
+      color: #bdb3c4;
+
+      font-size: 10px;
+
+      letter-spacing: .25px;
+    }
+
+    .card-actions {
+      display: flex;
+
+      gap: 8px;
+
+      margin-top: 13px;
+    }
+
+    .card-actions .btn {
+      flex: 1;
+    }
+
+    /* =====================================================
+       CANJE TABLE
+    ===================================================== */
+
+    .benefit-table {
+      width: 100%;
+
+      margin-top: 18px;
+
+      border-collapse: collapse;
+
+      overflow: hidden;
+
+      font-size: 12px;
+    }
+
+    .benefit-table th {
+      color: #aaa1b3;
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .5px;
+    }
+
+    .benefit-table th,
+    .benefit-table td {
+      padding: 11px 9px;
+
+      text-align: left;
+
+      border-bottom:
+        1px solid #302837;
+    }
+
+    .benefit-table tr.selected {
+      background:
+        rgba(169,108,255,.18);
+
+      box-shadow:
+        inset 4px 0 var(--purple2);
+    }
+
+    /* =====================================================
+       WINNER
+    ===================================================== */
+
+    .winner-card {
+      margin-top: 18px;
+
+      padding: 22px;
+
+      text-align: center;
+
+      border-radius: 17px;
+
+      border: 2px solid var(--chrome);
+
+      background:
+        radial-gradient(
+          circle at 50% 0,
+          rgba(169,108,255,.23),
+          transparent 55%
+        ),
+        linear-gradient(
+          145deg,
+          #2a1736,
+          #0e0912
+        );
+
+      box-shadow:
+        0 0 30px rgba(169,108,255,.25);
+    }
+
+    .winner-trophy {
+      font-size: 48px;
+
+      margin-bottom: 5px;
+    }
+
+    .winner-title {
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: 2px;
+
+      color: #cdb7dc;
+    }
+
+    .winner-name {
+      margin: 8px 0;
+
+      font-size: 32px;
+
+      font-weight: 1000;
+
+      color: #fff;
+    }
+
+    .winner-ticket {
+      font-size: 25px;
+
+      font-weight: 1000;
+
+      color: var(--purple2);
+    }
+
+    .winner-prize {
+      margin-top: 10px;
+
+      font-size: 20px;
+
+      font-weight: 1000;
+    }
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+
+    .modal {
+      position: fixed;
+
+      inset: 0;
+
+      display: none;
+
+      place-items: center;
+
+      padding: 20px;
+
+      z-index: 100;
+
+      background:
+        rgba(0,0,0,.78);
+
+      backdrop-filter:
+        blur(5px);
+    }
+
+    .modal.show {
+      display: grid;
+    }
+
+    .modal-box {
+      width: min(430px, 100%);
+
+      padding: 23px;
+
+      border-radius: 17px;
+
+      border: 2px solid var(--chrome);
+
+      background:
+        linear-gradient(
+          145deg,
+          #281737,
+          #0d0911
+        );
+
+      box-shadow:
+        0 0 35px rgba(169,108,255,.25);
+    }
+
+    .modal-title {
+      margin: 0 0 17px;
+
+      font-size: 20px;
+
+      font-weight: 950;
+    }
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    #toast {
+      position: fixed;
+
+      right: 18px;
+
+      bottom: 18px;
+
+      z-index: 200;
+
+      max-width: 340px;
+
+      padding: 13px 16px;
+
+      border-radius: 10px;
+
+      border: 1px solid #806b91;
+
+      background: #17101e;
+
+      box-shadow:
+        0 0 20px rgba(169,108,255,.18);
+
+      color: white;
+
+      font-size: 12px;
+
+      display: none;
+    }
+
+    #toast.show {
+      display: block;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 720px) {
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .header-title {
+        font-size: 25px;
+      }
+
+      .header-s {
+        font-size: 56px;
+      }
+
+      .section {
+        padding: 17px;
+      }
+
+      .ticket-user {
+        font-size: 23px;
+      }
+
+      .ticket-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .card-actions {
+        flex-direction: column;
+      }
+
+    }
+  </style>
 </head>
+
 <body>
-<div class="app">
-<header><div class="logo">S</div><div><div class="brand">Solcito Mayu Play</div><div class="subtitle">Sistema interno · puntos · participaciones · tickets · sorteos</div></div></header>
 
-<nav class="tabs">
-<button class="tab active" data-tab="registro">REGISTRAR COMPRA</button>
-<button class="tab" data-tab="usuarios">USUARIOS</button>
-<button class="tab" data-tab="canjes">CANJES</button>
-<button class="tab" data-tab="sorteo">SORTEO</button>
-</nav>
+  <!-- =====================================================
+       LOGIN
+  ====================================================== -->
 
-<section id="registro" class="section active">
-<h2>Registrar compra</h2><div id="registroEstado" class="status">Consultando estado...</div>
-<div class="grid">
-<div class="field"><label>USUARIO</label><input id="usuarioCompra" autocomplete="off" placeholder="Escribí 3 o más caracteres"><div id="sugerenciasCompra"></div></div>
-<div class="field"><label>MONTO DE LA COMPRA</label><input id="montoCompra" type="number" min="1" placeholder="$ 0"></div>
-</div>
-<div class="field" style="margin-top:14px"><label>CANAL</label><select id="canalCompra"><option>WhatsApp</option><option>Telegram</option></select></div>
-<div class="actions"><button class="btn primary" id="registrarBtn">GENERAR PARTICIPACIONES</button></div>
-<div id="registroResultado" class="result"></div>
-</section>
+  <div id="loginScreen">
 
-<section id="usuarios" class="section">
-<h2>Buscar usuario</h2><div class="field"><label>BUSCAR DESDE EL TERCER CARÁCTER</label><input id="busquedaUsuario" autocomplete="off" placeholder="Nombre, número o combinación"></div>
-<div id="sugerenciasUsuario"></div><div id="usuarioResultado" class="result"></div>
-</section>
+    <div class="login-card">
 
-<section id="canjes" class="section">
-<h2>Canjes</h2>
-<div class="grid"><div class="field"><label>USUARIO</label><input id="usuarioCanje" autocomplete="off" placeholder="Buscar usuario"><div id="sugerenciasCanje"></div></div>
-<div class="field"><label>BENEFICIO</label><select id="beneficioCanje"><option value="">Seleccionar beneficio</option><option value="1">1 participación — 100 puntos</option><option value="3">3 participaciones — 275 puntos</option><option value="7">7 participaciones — 600 puntos</option><option value="coupon">Cupón 20% — 300 puntos</option></select></div></div>
-<div class="actions"><button class="btn primary" id="canjearBtn">REALIZAR CANJE</button></div>
-<table id="tablaCanjes"><thead><tr><th>BENEFICIO</th><th>PUNTOS</th><th>PARTICIPACIONES</th></tr></thead><tbody>
-<tr data-beneficio="1"><td>1 participación</td><td><strong>100</strong></td><td>1</td></tr>
-<tr data-beneficio="3"><td>3 participaciones</td><td><strong>275</strong></td><td>3</td></tr>
-<tr data-beneficio="7"><td>7 participaciones</td><td><strong>600</strong></td><td>7</td></tr>
-<tr data-beneficio="coupon"><td>Cupón 20%</td><td><strong>300</strong></td><td>—</td></tr>
-</tbody></table>
-<div id="canjeResultado" class="result"></div>
-</section>
+      <div class="login-logo">
+        S
+      </div>
 
-<section id="sorteo" class="section">
-<h2>Sorteo semanal</h2><div id="sorteoEstado" class="status">Consultando estado...</div>
-<div class="grid"><div><div class="status"><strong>Premio:</strong> $100.000<br><strong>Bloqueo:</strong> sábados 19:59<br><strong>Registro:</strong> se reabre únicamente con autorización.</div>
-<button class="btn primary" id="sortearBtn">🏆 SORTEAR ÚNICO GANADOR</button><br><button class="btn" id="habilitarBtn" style="margin-top:9px">HABILITAR REGISTRO DE TICKETS</button></div>
-<div><h3>Registro semanal de ganadores</h3><div id="ganadoresLista" class="result"></div></div></div>
-<div id="sorteoResultado" class="result"></div>
-</section>
-</div>
+      <div class="brand">
+        Solcito Mayu Play
+      </div>
 
-<div id="modal" class="modal"><div class="modalbox"><h2 id="modalTitle">Autorización</h2><div class="field"><label>CONTRASEÑA</label><input id="password" type="password"></div><div class="actions"><button class="btn primary" id="modalConfirm">CONFIRMAR</button><button class="btn" id="modalClose">CANCELAR</button></div></div></div>
-<div id="toast" class="toast"></div>
+      <div class="login-subtitle">
+        SISTEMA INTERNO · ACCESO RESTRINGIDO
+      </div>
 
-<script>
-/* Pegá aquí la URL de tu Web App de Google Apps Script. */
-const API_URL='PEGAR_AQUI_URL_DE_TU_APPS_SCRIPT';
-const $=id=>document.getElementById(id);
-let modalAction=null;
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),3200)}
-async function api(accion,extra={}){if(API_URL.includes('PEGAR_AQUI'))throw Error('Falta colocar la URL de la Web App de Apps Script en API_URL.');const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({accion,...extra})});const d=await r.json();if(!d.ok)throw Error(d.error||'Error del servidor');return d}
-function money(n){return '$ '+Number(n||0).toLocaleString('es-AR')}
+      <form id="loginForm">
 
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.tab).classList.add('active')});
+        <div class="field">
 
-async function estado(){try{let d=await api('estadoSistema'),open=d.estado==='ABIERTO';$('registroEstado').className='status '+(open?'ok':'bad');$('registroEstado').textContent=open?'● REGISTRO ABIERTO':'● REGISTRO CERRADO — requiere autorización';$('sorteoEstado').className='status '+(open?'ok':'bad');$('sorteoEstado').textContent=open?'Registro abierto.':'Registro cerrado. Se requiere autorización para reabrir.';$('registrarBtn').disabled=!open}catch(e){$('registroEstado').className='status bad';$('registroEstado').textContent=e.message}}
+          <label>
+            USUARIO
+          </label>
 
-function buttons(){return '<div class="card-buttons"><button class="btn mini" onclick="savePNG(this)">GUARDAR PNG</button><button class="btn mini" onclick="shareCard(this)">COMPARTIR</button></div>'}
-function compraCard(d){let canal=d.canal==='Telegram'?'PROMO TELEGRAM':'COMPRA WHATSAPP';return `<div class="card"><div class="ticketline">TICKET <span class="ticketnums">${(d.tickets||[]).join(' · ')}</span></div><div class="username">${esc(d.usuario)}</div><div class="row"><span><strong>+${d.puntos}</strong> puntos</span><span>${d.puntosAcumulados} acumulados</span></div><div class="row"><span><strong>+${d.participaciones}</strong> participaciones</span><span>${d.participacionesAcumuladas} acumuladas</span></div><div class="foot">${canal} · ${esc(d.agente)} · ${esc(d.fechaHora)}</div>${buttons()}</div>`}
-function canjeCard(d){return `<div class="card"><div class="ticketline">${d.cupon?'CANJE CONFIRMADO':'PARTICIPACIONES EXTRA'}</div><div class="username">${esc(d.usuario)}</div>${d.cupon?`<div class="row"><strong>CUPÓN ${d.cupon.porcentaje}%</strong><span>${d.puntosRestantes} puntos restantes</span></div><div class="row"><span>Canje</span><strong>${esc(d.fechaHora)}</strong></div><div class="row"><span>Vence</span><strong>${esc(d.cupon.vencimiento)}</strong></div>`:`<div class="row"><span><strong>+${d.participaciones}</strong> participaciones</span><span>${d.puntosRestantes} puntos restantes</span></div><div class="ticketline" style="margin-top:12px">TICKETS <span class="ticketnums">${(d.tickets||[]).join(' · ')}</span></div><div class="foot">Sorteo del período vigente · ${esc(d.fechaHora)}</div>`}${buttons()}</div>`}
-function ganadorCard(d){return `<div class="winner"><div class="cup">🏆</div><div class="small">GANADOR · PREMIO ${money(d.premio)}</div><div class="name">${esc(d.ganador)}</div><div class="win-ticket">TICKET Nº ${esc(d.ticket)}</div><div class="small">Agente: ${esc(d.agente)} · Entregado: ${esc(d.fechaTicket)}</div><div class="small">Período: ${esc(d.duracion)} · Sorteado: ${esc(d.sorteadoEn)}</div>${buttons()}</div>`}
-function userCard(d){return `<div class="card"><div class="username">${esc(d.usuario)}</div><div class="row"><span>Puntos</span><strong>${d.puntos}</strong></div><div class="row"><span>Participaciones</span><strong>${d.participaciones}</strong></div><div class="foot">Consulta · ${new Date().toLocaleString('es-AR')}</div>${buttons()}</div>`}
+          <input
+            id="loginUser"
+            type="text"
+            autocomplete="username"
+            required
+          >
 
-$('registrarBtn').onclick=async()=>{let usuario=$('usuarioCompra').value.trim(),monto=Number($('montoCompra').value),canal=$('canalCompra').value;if(!usuario||!monto)return toast('Completá usuario y monto.');try{$('registroResultado').innerHTML=compraCard(await api('registrarCompra',{usuario,monto,canal}));$('usuarioCompra').value='';$('montoCompra').value='';toast('Compra registrada.');estado()}catch(e){toast(e.message)}};
+        </div>
 
-async function suggestions(q,target){if(q.trim().length<3){$(target).innerHTML='';return}try{let rows=await api('buscarUsuarios',{texto:q});$(target).innerHTML=rows.map(x=>`<div class="suggestions"><div class="suggestion" data-u="${esc(x.usuario)}"><strong>${esc(x.usuario)}</strong> · ${x.puntos} puntos · ${x.participaciones} participaciones</div></div>`).join('');$(target).querySelectorAll('.suggestion').forEach(x=>x.onclick=()=>{$('usuarioCompra').value=x.dataset.u;$('usuarioCanje').value=x.dataset.u;$('busquedaUsuario').value=x.dataset.u;$(target).innerHTML=''})}catch(e){toast(e.message)}}
-$('usuarioCompra').oninput=e=>suggestions(e.target.value,'sugerenciasCompra');$('usuarioCanje').oninput=e=>suggestions(e.target.value,'sugerenciasCanje');
+        <div class="field">
 
-let timer;$('busquedaUsuario').oninput=e=>{clearTimeout(timer);timer=setTimeout(async()=>{let q=e.target.value.trim();if(q.length<3)return $('sugerenciasUsuario').innerHTML='';try{let rows=await api('buscarUsuarios',{texto:q});$('sugerenciasUsuario').innerHTML=rows.map(x=>`<div class="suggestions"><div class="suggestion" data-u="${esc(x.usuario)}">${esc(x.usuario)} · ${x.puntos} puntos · ${x.participaciones} participaciones</div></div>`).join('');$('sugerenciasUsuario').querySelectorAll('.suggestion').forEach(x=>x.onclick=async()=>{let u=x.dataset.u;$('busquedaUsuario').value=u;$('sugerenciasUsuario').innerHTML='';try{$('usuarioResultado').innerHTML=userCard(await api('resumenUsuario',{usuario:u}))}catch(e){toast(e.message)}})}catch(e){toast(e.message)}},180)};
+          <label>
+            CONTRASEÑA
+          </label>
 
-$('beneficioCanje').onchange=e=>document.querySelectorAll('#tablaCanjes tbody tr').forEach(r=>r.classList.toggle('selected',r.dataset.beneficio===e.target.value));
-$('canjearBtn').onclick=async()=>{let usuario=$('usuarioCanje').value.trim(),beneficio=$('beneficioCanje').value;if(!usuario||!beneficio)return toast('Seleccioná usuario y beneficio.');try{$('canjeResultado').innerHTML=canjeCard(await api('realizarCanje',{usuario,beneficio}));$('beneficioCanje').value='';document.querySelectorAll('#tablaCanjes tbody tr').forEach(r=>r.classList.remove('selected'));toast('Canje realizado.')}catch(e){toast(e.message)}};
+          <input
+            id="loginPassword"
+            type="password"
+            autocomplete="current-password"
+            required
+          >
 
-function modal(a){modalAction=a;$('password').value='';$('modalTitle').textContent=a==='sorteo'?'Autorizar sorteo':'Autorizar reapertura de tickets';$('modal').classList.add('show');$('password').focus()}
-$('modalClose').onclick=()=>$('modal').classList.remove('show');$('sortearBtn').onclick=()=>modal('sorteo');$('habilitarBtn').onclick=()=>modal('habilitar');
-$('modalConfirm').onclick=async()=>{try{let p=$('password').value;if(!p)return toast('Ingresá la contraseña.');if(modalAction==='sorteo'){$('sorteoResultado').innerHTML=ganadorCard(await api('ejecutarSorteo',{password:p}));toast('Sorteo realizado.');ganadores()}else{await api('habilitarRegistro',{password:p});toast('Registro habilitado.')}$('modal').classList.remove('show');estado()}catch(e){toast(e.message)}};
+        </div>
 
-async function ganadores(){try{let rows=await api('ganadores');$('ganadoresLista').innerHTML=rows.length?rows.map(x=>`<div class="row"><div><strong>Ticket Nº ${esc(x.ticket)}</strong><br><strong>${esc(x.usuario)}</strong><br><span class="small">${esc(x.agente)} · ${esc(x.fecha)}</span></div><strong>${money(x.premio)}</strong></div>`).join(''):'<span class="muted">Sin ganadores todavía.</span>'}catch(e){$('ganadoresLista').textContent=e.message}}
-function loadCanvas(){return new Promise((ok,no)=>{let s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
-async function canvasFor(btn){if(!window.html2canvas)await loadCanvas();return html2canvas(btn.closest('.card,.winner'),{backgroundColor:null,scale:2})}
-async function savePNG(btn){try{let c=await canvasFor(btn),a=document.createElement('a');a.download='solcito-mayu-play.png';a.href=c.toDataURL('image/png');a.click();toast('PNG guardado.')}catch(e){toast('No se pudo generar el PNG. '+e.message)}}
-async function shareCard(btn){try{let c=await canvasFor(btn),blob=await new Promise(r=>c.toBlob(r,'image/png')),file=new File([blob],'solcito-mayu-play.png',{type:'image/png'});if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({title:'Solcito Mayu Play',files:[file]});else{let u=URL.createObjectURL(blob);window.open(u,'_blank');toast('Se abrió la imagen para compartirla.')}}catch(e){if(e.name!=='AbortError')toast('No se pudo compartir.')}}
+        <button
+          type="submit"
+          class="btn btn-primary btn-full"
+        >
+          INGRESAR AL SISTEMA
+        </button>
 
-estado();ganadores();setInterval(estado,30000);
-</script>
+        <div
+          id="loginError"
+          class="login-error"
+        ></div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       APP
+  ====================================================== -->
+
+  <div id="app" class="hidden">
+
+    <div class="container">
+
+      <header>
+
+        <div class="header-s">
+          S
+        </div>
+
+        <div>
+
+          <div class="header-title">
+            Solcito Mayu Play
+          </div>
+
+          <div class="header-subtitle">
+            Puntos · Participaciones · Tickets · Sorteos
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- =================================================
+           TABS
+      ================================================== -->
+
+      <div class="tabs">
+
+        <button
+          class="tab active"
+          data-section="registro"
+        >
+          REGISTRAR COMPRA
+        </button>
+
+        <button
+          class="tab"
+          data-section="usuarios"
+        >
+          USUARIOS
+        </button>
+
+        <button
+          class="tab"
+          data-section="canjes"
+        >
+          CANJES
+        </button>
+
+        <button
+          class="tab"
+          data-section="sorteo"
+        >
+          SORTEO
+        </button>
+
+      </div>
+
+
+      <!-- =================================================
+           REGISTRO
+      ================================================== -->
+
+      <section
+        id="registro"
+        class="section active"
+      >
+
+        <h2 class="section-title">
+          Registrar compra
+        </h2>
+
+        <div
+          id="registerStatus"
+          class="status"
+        >
+          Consultando estado del sistema...
+        </div>
+
+
+        <div class="grid">
+
+          <div class="field">
+
+            <label>
+              USUARIO
+            </label>
+
+            <input
+              id="purchaseUser"
+              type="text"
+              autocomplete="off"
+              placeholder="Escribí desde el tercer carácter"
+            >
+
+            <div id="purchaseSuggestions"></div>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              MONTO DE LA COMPRA
+            </label>
+
+            <input
+              id="purchaseAmount"
+              type="number"
+              min="1"
+              placeholder="$"
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            CANAL DE COMPRA
+          </label>
+
+          <select id="purchaseChannel">
+
+            <option value="WhatsApp">
+              WhatsApp
+            </option>
+
+            <option value="Telegram">
+              Telegram
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <button
+          id="registerPurchaseButton"
+          class="btn btn-primary"
+        >
+          GENERAR PARTICIPACIONES
+        </button>
+
+
+        <div id="purchaseResult"></div>
+
+      </section>
+
+
+      <!-- =================================================
+           USUARIOS
+      ================================================== -->
+
+      <section
+        id="usuarios"
+        class="section"
+      >
+
+        <h2 class="section-title">
+          Buscar usuario
+        </h2>
+
+        <div class="field">
+
+          <label>
+            BUSCAR USUARIO
+          </label>
+
+          <input
+            id="userSearch"
+            type="text"
+            autocomplete="off"
+            placeholder="Nombre o usuario..."
+          >
+
+          <div id="userSuggestions"></div>
+
+        </div>
+
+        <div id="userResult"></div>
+
+      </section>
+
+
+      <!-- =================================================
+           CANJES
+      ================================================== -->
+
+      <section
+        id="canjes"
+        class="section"
+      >
+
+        <h2 class="section-title">
+          Canjes
+        </h2>
+
+
+        <div class="grid">
+
+          <div class="field">
+
+            <label>
+              USUARIO
+            </label>
+
+            <input
+              id="redeemUser"
+              type="text"
+              autocomplete="off"
+              placeholder="Nombre del usuario"
+            >
+
+            <div id="redeemSuggestions"></div>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>
+              BENEFICIO
+            </label>
+
+            <select id="benefitSelect">
+
+              <option value="">
+                Seleccionar beneficio
+              </option>
+
+              <option value="1">
+                1 participación — 100 puntos
+              </option>
+
+              <option value="3">
+                3 participaciones — 275 puntos
+              </option>
+
+              <option value="7">
+                7 participaciones — 600 puntos
+              </option>
+
+              <option value="coupon">
+                Cupón 20% — 300 puntos
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="redeemButton"
+          class="btn btn-primary"
+        >
+          REALIZAR CANJE
+        </button>
+
+
+        <table class="benefit-table">
+
+          <thead>
+
+            <tr>
+
+              <th>
+                BENEFICIO
+              </th>
+
+              <th>
+                PUNTOS
+              </th>
+
+              <th>
+                PARTICIPACIONES
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr data-benefit="1">
+
+              <td>
+                1 participación
+              </td>
+
+              <td>
+                100
+              </td>
+
+              <td>
+                1
+              </td>
+
+            </tr>
+
+
+            <tr data-benefit="3">
+
+              <td>
+                3 participaciones
+              </td>
+
+              <td>
+                275
+              </td>
+
+              <td>
+                3
+              </td>
+
+            </tr>
+
+
+            <tr data-benefit="7">
+
+              <td>
+                7 participaciones
+              </td>
+
+              <td>
+                600
+              </td>
+
+              <td>
+                7
+              </td>
+
+            </tr>
+
+
+            <tr data-benefit="coupon">
+
+              <td>
+                Cupón 20%
+              </td>
+
+              <td>
+                300
+              </td>
+
+              <td>
+                —
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+
+        <div id="redeemResult"></div>
+
+      </section>
+
+
+      <!-- =================================================
+           SORTEO
+      ================================================== -->
+
+      <section
+        id="sorteo"
+        class="section"
+      >
+
+        <h2 class="section-title">
+          Sorteo semanal
+        </h2>
+
+
+        <div
+          id="drawStatus"
+          class="status"
+        >
+          Consultando estado...
+        </div>
+
+
+        <button
+          id="drawButton"
+          class="btn btn-primary"
+        >
+          🏆 SORTEAR ÚNICO GANADOR
+        </button>
+
+
+        <button
+          id="reopenButton"
+          class="btn"
+        >
+          HABILITAR REGISTRO DE TICKETS
+        </button>
+
+
+        <div id="drawResult"></div>
+
+
+        <h3 style="margin-top:28px;">
+          Ganadores anteriores
+        </h3>
+
+
+        <div id="winnersList"></div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       MODAL
+  ====================================================== -->
+
+  <div
+    id="authorizationModal"
+    class="modal"
+  >
+
+    <div class="modal-box">
+
+      <h3
+        id="modalTitle"
+        class="modal-title"
+      >
+        Autorización
+      </h3>
+
+
+      <div class="field">
+
+        <label>
+          CONTRASEÑA DE AUTORIZACIÓN
+        </label>
+
+        <input
+          id="adminPassword"
+          type="password"
+          autocomplete="current-password"
+        >
+
+      </div>
+
+
+      <button
+        id="confirmAuthorization"
+        class="btn btn-primary"
+      >
+        CONFIRMAR
+      </button>
+
+
+      <button
+        id="cancelAuthorization"
+        class="btn"
+      >
+        CANCELAR
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div id="toast"></div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script>
+
+    /*
+     * =====================================================
+     * URL DE GOOGLE APPS SCRIPT
+     * =====================================================
+     */
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbyQWh476V_x8VZpvdlF7Tzh-U7C8xci0fHB-hnnm6Tt_MfnNotcz5bTEE3_-WZPpDan/exec";
+
+
+    /*
+     * Token de sesión.
+     *
+     * NO guardamos la contraseña.
+     */
+
+    let sessionToken =
+      sessionStorage.getItem(
+        "solcito_session"
+      ) || "";
+
+
+    let authorizationAction =
+      null;
+
+
+    /*
+     * =====================================================
+     * HELPERS
+     * =====================================================
+     */
+
+    const $ = id =>
+      document.getElementById(id);
+
+
+    function escapeHTML(value) {
+
+      return String(
+        value ?? ""
+      ).replace(
+        /[&<>"']/g,
+        char => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[char])
+      );
+
+    }
+
+
+    function showToast(message) {
+
+      const toast =
+        $("toast");
+
+      toast.textContent =
+        message;
+
+      toast.classList.add(
+        "show"
+      );
+
+      setTimeout(() => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      }, 3000);
+
+    }
+
+
+    /*
+     * =====================================================
+     * API
+     * =====================================================
+     */
+
+    async function api(
+      action,
+      data = {}
+    ) {
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+
+            body: JSON.stringify({
+              accion: action,
+
+              token:
+                sessionToken,
+
+              ...data
+            })
+          }
+        );
+
+
+      const result =
+        await response.json();
+
+
+      if (!result.ok) {
+
+        throw new Error(
+          result.error ||
+          "Se produjo un error."
+        );
+
+      }
+
+
+      return result;
+
+    }
+
+
+    /*
+     * =====================================================
+     * LOGIN
+     * =====================================================
+     */
+
+    $("loginForm")
+      .addEventListener(
+        "submit",
+        async event => {
+
+          event.preventDefault();
+
+
+          const username =
+            $("loginUser")
+              .value
+              .trim();
+
+
+          const password =
+            $("loginPassword")
+              .value;
+
+
+          $("loginError")
+            .textContent = "";
+
+
+          try {
+
+            const result =
+              await api(
+                "login",
+                {
+                  usuario:
+                    username,
+
+                  contrasena:
+                    password
+                }
+              );
+
+
+            sessionToken =
+              result.token;
+
+
+            sessionStorage.setItem(
+              "solcito_session",
+              sessionToken
+            );
+
+
+            enterApplication();
+
+
+          } catch (error) {
+
+            $("loginError")
+              .textContent =
+              error.message;
+
+          }
+
+        }
+      );
+
+
+    /*
+     * =====================================================
+     * ENTRAR A LA APLICACIÓN
+     * =====================================================
+     */
+
+    function enterApplication() {
+
+      $("loginScreen")
+        .classList
+        .add("hidden");
+
+
+      $("app")
+        .classList
+        .remove("hidden");
+
+
+      updateSystemStatus();
+
+      loadWinners();
+
+    }
+
+
+    /*
+     * =====================================================
+     * TABS
+     * =====================================================
+     */
+
+    document
+      .querySelectorAll(".tab")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            document
+              .querySelectorAll(".tab")
+              .forEach(
+                item =>
+                  item.classList
+                    .remove("active")
+              );
+
+
+            document
+              .querySelectorAll(".section")
+              .forEach(
+                section =>
+                  section.classList
+                    .remove("active")
+              );
+
+
+            button
+              .classList
+              .add("active");
+
+
+            const section =
+              $(button.dataset.section);
+
+
+            if (section) {
+
+              section
+                .classList
+                .add("active");
+
+            }
+
+          }
+        );
+
+      });
+
+
+    /*
+     * =====================================================
+     * ESTADO DEL SISTEMA
+     * =====================================================
+     */
+
+    async function updateSystemStatus() {
+
+      try {
+
+        const result =
+          await api(
+            "estadoSistema"
+          );
+
+
+        const open =
+          result.estado ===
+          "ABIERTO";
+
+
+        const registerStatus =
+          $("registerStatus");
+
+
+        const drawStatus =
+          $("drawStatus");
+
+
+        registerStatus
+          .classList
+          .remove(
+            "open",
+            "closed"
+          );
+
+
+        drawStatus
+          .classList
+          .remove(
+            "open",
+            "closed"
+          );
+
+
+        if (open) {
+
+          registerStatus
+            .classList
+            .add("open");
+
+          registerStatus
+            .textContent =
+            "● REGISTRO DE TICKETS ABIERTO";
+
+
+          drawStatus
+            .classList
+            .add("open");
+
+          drawStatus
+            .textContent =
+            "● REGISTRO ABIERTO";
+
+        } else {
+
+          registerStatus
+            .classList
+            .add("closed");
+
+          registerStatus
+            .textContent =
+            "● REGISTRO DE TICKETS CERRADO";
+
+
+          drawStatus
+            .classList
+            .add("closed");
+
+          drawStatus
+            .textContent =
+            "● REGISTRO CERRADO";
+
+        }
+
+
+        $("registerPurchaseButton")
+          .disabled =
+          !open;
+
+
+      } catch (error) {
+
+        showToast(
+          error.message
+        );
+
+      }
+
+    }
+
+
+    /*
+     * =====================================================
+     * AUTOCOMPLETADO
+     * =====================================================
+     */
+
+    async function showSuggestions(
+      input,
+      container
+    ) {
+
+      const text =
+        input.value
+          .trim();
+
+
+      if (text.length < 3) {
+
+        container.innerHTML =
+          "";
+
+        return;
+
+      }
+
+
+      try {
+
+        const result =
+          await api(
+            "buscarUsuarios",
+            {
+              texto:
+                text
+            }
+          );
+
+
+        if (
+          !result.data ||
+          result.data.length === 0
+        ) {
+
+          container.innerHTML =
+            "";
+
+          return;
+
+        }
+
+
+        container.innerHTML =
+
+          `<div class="suggestions">` +
+
+          result.data
+            .map(user => `
+
+              <div
+                class="suggestion"
+                data-username="${escapeHTML(user.usuario)}"
+              >
+                <strong>
+                  ${escapeHTML(user.usuario)}
+                </strong>
+                ·
+                ${user.puntos}
+                puntos
+              </div>
+
+            `)
+            .join("") +
+
+          `</div>`;
+
+
+        container
+          .querySelectorAll(
+            ".suggestion"
+          )
+          .forEach(item => {
+
+            item.addEventListener(
+              "click",
+              () => {
+
+                input.value =
+                  item.dataset.username;
+
+                container.innerHTML =
+                  "";
+
+              }
+            );
+
+          });
+
+
+      } catch (error) {
+
+        showToast(
+          error.message
+        );
+
+      }
+
+    }
+
+
+    $("purchaseUser")
+      .addEventListener(
+        "input",
+        event =>
+          showSuggestions(
+            event.target,
+            $("purchaseSuggestions")
+          )
+      );
+
+
+    $("redeemUser")
+      .addEventListener(
+        "input",
+        event =>
+          showSuggestions(
+            event.target,
+            $("redeemSuggestions")
+          )
+      );
+
+
+    /*
+     * =====================================================
+     * REGISTRAR COMPRA
+     * =====================================================
+     */
+
+    $("registerPurchaseButton")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const username =
+            $("purchaseUser")
+              .value
+              .trim();
+
+
+          const amount =
+            Number(
+              $("purchaseAmount")
+                .value
+            );
+
+
+          const channel =
+            $("purchaseChannel")
+              .value;
+
+
+          if (!username) {
+
+            showToast(
+              "Ingresá el nombre del usuario."
+            );
+
+            return;
+
+          }
+
+
+          if (
+            !amount ||
+            amount < 1
+          ) {
+
+            showToast(
+              "Ingresá un monto válido."
+            );
+
+            return;
+
+          }
+
+
+          try {
+
+            const result =
+              await api(
+                "registrarCompra",
+                {
+                  usuario:
+                    username,
+
+                  monto:
+                    amount,
+
+                  canal:
+                    channel
+                }
+              );
+
+
+            $("purchaseResult")
+              .innerHTML =
+              createPurchaseCard(
+                result
+              );
+
+
+            $("purchaseUser")
+              .value = "";
+
+
+            $("purchaseAmount")
+              .value = "";
+
+
+            updateSystemStatus();
+
+
+          } catch (error) {
+
+            showToast(
+              error.message
+            );
+
+          }
+
+        }
+      );
+
+
+    /*
+     * =====================================================
+     * TARJETA DE COMPRA
+     * =====================================================
+     */
+
+    function createPurchaseCard(data) {
+
+      const tickets =
+        data.tickets &&
+        data.tickets.length
+          ? data.tickets.join(" · ")
+          : "SIN TICKET";
+
+
+      const channelLabel =
+        data.canal ===
+        "Telegram"
+          ? "PROMO TELEGRAM"
+          : "COMPRA WHATSAPP";
+
+
+      return `
+
+        <div class="ticket-card">
+
+          <div>
+            TICKET
+            <div class="ticket-number">
+              ${escapeHTML(tickets)}
+            </div>
+          </div>
+
+
+          <div class="ticket-user">
+            ${escapeHTML(data.usuario)}
+          </div>
+
+
+          <div class="ticket-row">
+
+            <span>
+              <strong>
+                +${data.puntos}
+              </strong>
+              puntos
+            </span>
+
+            <span>
+              ${data.puntosAcumulados}
+              puntos acumulados
+            </span>
+
+          </div>
+
+
+          <div class="ticket-row">
+
+            <span>
+              <strong>
+                +${data.participaciones}
+              </strong>
+              participaciones
+            </span>
+
+            <span>
+              ${data.participacionesAcumuladas}
+              acumuladas
+            </span>
+
+          </div>
+
+
+          <div class="ticket-foot">
+
+            ${channelLabel}
+            ·
+            ${escapeHTML(data.agente)}
+            ·
+            ${escapeHTML(data.fechaHora)}
+
+          </div>
+
+
+          <div class="card-actions">
+
+            <button
+              class="btn"
+              onclick="savePNG(this)"
+            >
+              GUARDAR PNG
+            </button>
+
+            <button
+              class="btn"
+              onclick="shareCard(this)"
+            >
+              COMPARTIR
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /*
+     * =====================================================
+     * BÚSQUEDA DE USUARIO
+     * =====================================================
+     */
+
+    $("userSearch")
+      .addEventListener(
+        "input",
+        async event => {
+
+          const input =
+            event.target;
+
+
+          const text =
+            input.value
+              .trim();
+
+
+          const container =
+            $("userSuggestions");
+
+
+          if (text.length < 3) {
+
+            container.innerHTML =
+              "";
+
+            return;
+
+          }
+
+
+          try {
+
+            const result =
+              await api(
+                "buscarUsuarios",
+                {
+                  texto:
+                    text
+                }
+              );
+
+
+            container.innerHTML =
+
+              `<div class="suggestions">` +
+
+              result.data
+                .map(user => `
+
+                  <div
+                    class="suggestion"
+                    data-username="${escapeHTML(user.usuario)}"
+                  >
+                    ${escapeHTML(user.usuario)}
+                    ·
+                    ${user.puntos}
+                    puntos
+                  </div>
+
+                `)
+                .join("") +
+
+              `</div>`;
+
+
+            container
+              .querySelectorAll(
+                ".suggestion"
+              )
+              .forEach(item => {
+
+                item.addEventListener(
+                  "click",
+                  async () => {
+
+                    const username =
+                      item.dataset.username;
+
+
+                    input.value =
+                      username;
+
+
+                    container.innerHTML =
+                      "";
+
+
+                    try {
+
+                      const user =
+                        await api(
+                          "resumenUsuario",
+                          {
+                            usuario:
+                              username
+                          }
+                        );
+
+
+                      $("userResult")
+                        .innerHTML =
+                        createUserCard(
+                          user
+                        );
+
+
+                    } catch (error) {
+
+                      showToast(
+                        error.message
+                      );
+
+                    }
+
+                  }
+                );
+
+              });
+
+
+          } catch (error) {
+
+            showToast(
+              error.message
+            );
+
+          }
+
+        }
+      );
+
+
+    /*
+     * =====================================================
+     * TARJETA DE USUARIO
+     * =====================================================
+     */
+
+    function createUserCard(data) {
+
+      const now =
+        new Date()
+          .toLocaleString(
+            "es-AR"
+          );
+
+
+      return `
+
+        <div class="ticket-card">
+
+          <div class="ticket-user">
+            ${escapeHTML(data.usuario)}
+          </div>
+
+
+          <div class="ticket-row">
+
+            <span>
+              Puntos
+            </span>
+
+            <strong>
+              ${data.puntos}
+            </strong>
+
+          </div>
+
+
+          <div class="ticket-row">
+
+            <span>
+              Participaciones
+            </span>
+
+            <strong>
+              ${data.participaciones}
+            </strong>
+
+          </div>
+
+
+          <div class="ticket-foot">
+
+            Consulta realizada ·
+            ${now}
+
+          </div>
+
+
+          <div class="card-actions">
+
+            <button
+              class="btn"
+              onclick="savePNG(this)"
+            >
+              GUARDAR PNG
+            </button>
+
+            <button
+              class="btn"
+              onclick="shareCard(this)"
+            >
+              COMPARTIR
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /*
+     * =====================================================
+     * RESALTAR CANJE
+     * =====================================================
+     */
+
+    $("benefitSelect")
+      .addEventListener(
+        "change",
+        event => {
+
+          const value =
+            event.target.value;
+
+
+          document
+            .querySelectorAll(
+              ".benefit-table tbody tr"
+            )
+            .forEach(row => {
+
+              row.classList.toggle(
+                "selected",
+                row.dataset.benefit ===
+                value
+              );
+
+            });
+
+        }
+      );
+
+
+    /*
+     * =====================================================
+     * REALIZAR CANJE
+     * =====================================================
+     */
+
+    $("redeemButton")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const username =
+            $("redeemUser")
+              .value
+              .trim();
+
+
+          const benefit =
+            $("benefitSelect")
+              .value;
+
+
+          if (!username) {
+
+            showToast(
+              "Ingresá el nombre del usuario."
+            );
+
+            return;
+
+          }
+
+
+          if (!benefit) {
+
+            showToast(
+              "Seleccioná un beneficio."
+            );
+
+            return;
+
+          }
+
+
+          try {
+
+            const result =
+              await api(
+                "realizarCanje",
+                {
+                  usuario:
+                    username,
+
+                  beneficio:
+                    benefit
+                }
+              );
+
+
+            $("redeemResult")
+              .innerHTML =
+              createRedeemCard(
+                result
+              );
+
+
+          } catch (error) {
+
+            showToast(
+              error.message
+            );
+
+          }
+
+        }
+      );
+
+
+    /*
+     * =====================================================
+     * TARJETA DE CANJE
+     * =====================================================
+     */
+
+    function createRedeemCard(data) {
+
+      let content = "";
+
+
+      if (data.cupon) {
+
+        content = `
+
+          <div>
+            <strong>
+              CUPÓN 20%
+            </strong>
+          </div>
+
+
+          <div class="ticket-row">
+
+            <span>
+              Canje realizado
+            </span>
+
+            <strong>
+              ${escapeHTML(data.fechaHora)}
+            </strong>
+
+          </div>
+
+
+          <div class="ticket-row">
+
+            <span>
+              Vencimiento
+            </span>
+
+            <strong>
+              ${escapeHTML(
+                data.cupon.vencimiento
+              )}
+            </strong>
+
+          </div>
+
+        `;
+
+      } else {
+
+        content = `
+
+          <div>
+            <strong>
+              TENÉS
+              ${data.participaciones}
+              PARTICIPACIONES EXTRA
+            </strong>
+          </div>
+
+
+          <div class="ticket-number">
+
+            TICKETS
+            ${data.tickets.join(" · ")}
+
+          </div>
+
+
+          <div class="ticket-row">
+
+            <span>
+              Sorteo
+            </span>
+
+            <strong>
+              Próximo sorteo
+            </strong>
+
+          </div>
+
+        `;
+
+      }
+
+
+      return `
+
+        <div class="ticket-card">
+
+          <div class="ticket-user">
+
+            ${escapeHTML(
+              data.usuario
+            )}
+
+          </div>
+
+
+          ${content}
+
+
+          <div class="ticket-foot">
+
+            ${data.puntosRestantes}
+            puntos restantes
+            ·
+            ${escapeHTML(
+              data.fechaHora
+            )}
+
+          </div>
+
+
+          <div class="card-actions">
+
+            <button
+              class="btn"
+              onclick="savePNG(this)"
+            >
+              GUARDAR PNG
+            </button>
+
+            <button
+              class="btn"
+              onclick="shareCard(this)"
+            >
+              COMPARTIR
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /*
+     * =====================================================
+     * SORTEO
+     * =====================================================
+     */
+
+    $("drawButton")
+      .addEventListener(
+        "click",
+        () => {
+
+          authorizationAction =
+            "draw";
+
+
+          openAuthorizationModal();
+
+        }
+      );
+
+
+    $("reopenButton")
+      .addEventListener(
+        "click",
+        () => {
+
+          authorizationAction =
+            "reopen";
+
+
+          openAuthorizationModal();
+
+        }
+      );
+
+
+    function openAuthorizationModal() {
+
+      $("adminPassword")
+        .value = "";
+
+
+      if (
+        authorizationAction ===
+        "draw"
+      ) {
+
+        $("modalTitle")
+          .textContent =
+          "Autorizar sorteo";
+
+      } else {
+
+        $("modalTitle")
+          .textContent =
+          "Autorizar reapertura";
+
+      }
+
+
+      $("authorizationModal")
+        .classList
+        .add("show");
+
+
+      setTimeout(
+        () =>
+          $("adminPassword")
+            .focus(),
+        50
+      );
+
+    }
+
+
+    $("cancelAuthorization")
+      .addEventListener(
+        "click",
+        () => {
+
+          $("authorizationModal")
+            .classList
+            .remove("show");
+
+        }
+      );
+
+
+    $("confirmAuthorization")
+      .addEventListener(
+        "click",
+        async () => {
+
+          const password =
+            $("adminPassword")
+              .value;
+
+
+          if (!password) {
+
+            showToast(
+              "Ingresá la contraseña."
+            );
+
+            return;
+
+          }
+
+
+          try {
+
+            if (
+              authorizationAction ===
+              "draw"
+            ) {
+
+              const result =
+                await api(
+                  "ejecutarSorteo",
+                  {
+                    password:
+                      password
+                  }
+                );
+
+
+              $("drawResult")
+                .innerHTML =
+                createWinnerCard(
+                  result
+                );
+
+
+              launchConfetti();
+
+
+            } else {
+
+              await api(
+                "habilitarRegistro",
+                {
+                  password:
+                    password
+                }
+              );
+
+
+              showToast(
+                "Registro de tickets habilitado."
+              );
+
+            }
+
+
+            $("authorizationModal")
+              .classList
+              .remove("show");
+
+
+            updateSystemStatus();
+
+            loadWinners();
+
+
+          } catch (error) {
+
+            showToast(
+              error.message
+            );
+
+          }
+
+        }
+      );
+
+
+    /*
+     * =====================================================
+     * TARJETA GANADOR
+     * =====================================================
+     */
+
+    function createWinnerCard(data) {
+
+      return `
+
+        <div class="winner-card">
+
+          <div class="winner-trophy">
+            🏆
+          </div>
+
+
+          <div class="winner-title">
+            GANADOR DEL SORTEO
+          </div>
+
+
+          <div class="winner-name">
+            ${escapeHTML(
+              data.ganador
+            )}
+          </div>
+
+
+          <div class="winner-ticket">
+
+            TICKET Nº
+            ${escapeHTML(
+              data.ticket
+            )}
+
+          </div>
+
+
+          <div class="winner-prize">
+
+            PREMIO
+            $100.000
+
+          </div>
+
+
+          <div class="ticket-foot">
+
+            Agente:
+            ${escapeHTML(
+              data.agente
+            )}
+
+            ·
+
+            Ticket entregado:
+            ${escapeHTML(
+              data.fechaTicket
+            )}
+
+            ·
+
+            ${escapeHTML(
+              data.duracion
+            )}
+
+            ·
+
+            Sorteado:
+            ${escapeHTML(
+              data.sorteadoEn
+            )}
+
+          </div>
+
+
+          <div class="card-actions">
+
+            <button
+              class="btn"
+              onclick="savePNG(this)"
+            >
+              GUARDAR PNG
+            </button>
+
+            <button
+              class="btn"
+              onclick="shareCard(this)"
+            >
+              COMPARTIR
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /*
+     * =====================================================
+     * GANADORES ANTERIORES
+     * =====================================================
+     */
+
+    async function loadWinners() {
+
+      try {
+
+        const result =
+          await api(
+            "ganadores"
+          );
+
+
+        const container =
+          $("winnersList");
+
+
+        if (
+          !result.data ||
+          result.data.length === 0
+        ) {
+
+          container.innerHTML =
+            `<div class="status">
+              Todavía no hay ganadores registrados.
+            </div>`;
+
+          return;
+
+        }
+
+
+        container.innerHTML =
+
+          result.data
+            .map(winner => `
+
+              <div
+                class="ticket-card"
+              >
+
+                <div
+                  class="ticket-number"
+                >
+                  TICKET Nº
+                  ${escapeHTML(
+                    winner.ticket
+                  )}
+                </div>
+
+
+                <div
+                  class="ticket-user"
+                >
+                  ${escapeHTML(
+                    winner.usuario
+                  )}
+                </div>
+
+
+                <div
+                  class="ticket-row"
+                >
+
+                  <span>
+                    Agente
+                  </span>
+
+                  <strong>
+                    ${escapeHTML(
+                      winner.agente
+                    )}
+                  </strong>
+
+                </div>
+
+
+                <div
+                  class="ticket-row"
+                >
+
+                  <span>
+                    Premio
+                  </span>
+
+                  <strong>
+                    $100.000
+                  </strong>
+
+                </div>
+
+
+                <div
+                  class="ticket-foot"
+                >
+                  Ticket entregado:
+                  ${escapeHTML(
+                    winner.fechaTicket
+                  )}
+                  ·
+                  ${escapeHTML(
+                    winner.duracion
+                  )}
+                </div>
+
+              </div>
+
+            `)
+            .join("");
+
+      } catch (error) {
+
+        console.log(
+          "No se pudo cargar ganadores",
+          error
+        );
+
+      }
+
+    }
+
+
+    /*
+     * =====================================================
+     * GENERACIÓN PNG
+     *
+     * html2canvas se carga solamente cuando
+     * el usuario solicita guardar/compartir.
+     * =====================================================
+     */
+
+    function loadHtml2Canvas() {
+
+      return new Promise(
+        (resolve, reject) => {
+
+          if (
+            window.html2canvas
+          ) {
+
+            resolve();
+
+            return;
+
+          }
+
+
+          const script =
+            document.createElement(
+              "script"
+            );
+
+
+          script.src =
+            "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+
+
+          script.onload =
+            resolve;
+
+
+          script.onerror =
+            reject;
+
+
+          document.head.appendChild(
+            script
+          );
+
+        }
+      );
+
+    }
+
+
+    async function createCardImage(button) {
+
+      await loadHtml2Canvas();
+
+
+      const card =
+        button.closest(
+          ".ticket-card, .winner-card"
+        );
+
+
+      return await html2canvas(
+        card,
+        {
+          backgroundColor:
+            null,
+
+          scale: 2,
+
+          useCORS: true
+        }
+      );
+
+    }
+
+
+    /*
+     * =====================================================
+     * GUARDAR PNG
+     * =====================================================
+     */
+
+    async function savePNG(button) {
+
+      try {
+
+        const canvas =
+          await createCardImage(
+            button
+          );
+
+
+        const link =
+          document.createElement(
+            "a"
+          );
+
+
+        link.download =
+          "solcito-mayu-play.png";
+
+
+        link.href =
+          canvas.toDataURL(
+            "image/png"
+          );
+
+
+        link.click();
+
+
+      } catch (error) {
+
+        showToast(
+          "No se pudo generar la imagen."
+        );
+
+      }
+
+    }
+
+
+    /*
+     * =====================================================
+     * COMPARTIR
+     * =====================================================
+     */
+
+    async function shareCard(button) {
+
+      try {
+
+        const canvas =
+          await createCardImage(
+            button
+          );
+
+
+        const blob =
+          await new Promise(
+            resolve =>
+              canvas.toBlob(
+                resolve,
+                "image/png"
+              )
+          );
+
+
+        const file =
+          new File(
+            [
+              blob
+            ],
+            "solcito-mayu-play.png",
+            {
+              type:
+                "image/png"
+            }
+          );
+
+
+        /*
+         * En teléfonos compatibles,
+         * abre el menú nativo de compartir.
+         */
+
+        if (
+          navigator.share &&
+          navigator.canShare &&
+          navigator.canShare({
+            files: [file]
+          })
+        ) {
+
+          await navigator.share({
+
+            title:
+              "Solcito Mayu Play",
+
+            files: [
+              file
+            ]
+
+          });
+
+
+          return;
+
+        }
+
+
+        /*
+         * Si el navegador no permite
+         * compartir archivos:
+         * abre la imagen.
+         */
+
+        const imageURL =
+          URL.createObjectURL(
+            blob
+          );
+
+
+        window.open(
+          imageURL,
+          "_blank"
+        );
+
+
+      } catch (error) {
+
+        /*
+         * Si el usuario canceló
+         * el menú de compartir,
+         * no mostramos error.
+         */
+
+        if (
+          error.name !==
+          "AbortError"
+        ) {
+
+          showToast(
+            "Este navegador no permite compartir la imagen directamente."
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /*
+     * =====================================================
+     * CONFETI
+     * =====================================================
+     */
+
+    function launchConfetti() {
+
+      const amount = 80;
+
+
+      for (
+        let i = 0;
+        i < amount;
+        i++
+      ) {
+
+        const piece =
+          document.createElement(
+            "div"
+          );
+
+
+        piece.style.position =
+          "fixed";
+
+
+        piece.style.width =
+          "7px";
+
+
+        piece.style.height =
+          "12px";
+
+
+        piece.style.background =
+          i % 2
+            ? "#a96cff"
+            : "#e2e5e9";
+
+
+        piece.style.left =
+          Math.random() * 100 +
+          "%";
+
+
+        piece.style.top =
+          "-20px";
+
+
+        piece.style.zIndex =
+          "300";
+
+
+        piece.style.borderRadius =
+          "2px";
+
+
+        document.body
+          .appendChild(
+            piece
+          );
+
+
+        const duration =
+          1800 +
+          Math.random() * 1800;
+
+
+        piece.animate(
+
+          [
+            {
+              transform:
+                "translateY(0) rotate(0deg)",
+
+              opacity: 1
+            },
+
+            {
+              transform:
+                `translateY(${window.innerHeight + 100}px) rotate(${720 + Math.random() * 720}deg)`,
+
+              opacity: 0
+            }
+          ],
+
+          {
+            duration:
+              duration,
+
+            easing:
+              "cubic-bezier(.2,.8,.3,1)"
+          }
+
+        );
+
+
+        setTimeout(
+          () =>
+            piece.remove(),
+          duration + 100
+        );
+
+      }
+
+    }
+
+
+    /*
+     * =====================================================
+     * INICIAR SESIÓN SI EXISTE TOKEN
+     * =====================================================
+     */
+
+    if (sessionToken) {
+
+      enterApplication();
+
+    }
+
+  </script>
+
 </body>
 </html>
