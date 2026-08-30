@@ -59,13 +59,44 @@
 
 /* Tarjeta de ticket: horizontal, angosta, dos líneas de info */
 .ticket {
-  max-width: 440px !important;
-  margin: 0 auto;
-  border: 2px solid #4c3866 !important;
+  width: 100% !important;
+  border: 2px solid #a855f7 !important;
   border-radius: 16px !important;
   padding: 15px 19px 12px !important;
-  background: linear-gradient(160deg,#1a0f28,#0c0814) !important;
-  box-shadow: 0 0 1px #a855f7, 0 0 20px #a855f733, inset 0 0 18px #a855f712 !important;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(130% 90% at 10% -10%, #6d28d955 0%, transparent 55%),
+    radial-gradient(120% 100% at 100% 115%, #c026d344 0%, transparent 55%),
+    linear-gradient(160deg,#2a1440 0%,#180d28 55%,#0a0612 100%) !important;
+  box-shadow:
+    0 0 0 1px #ffffff17 inset,
+    0 0 4px #a855f7,
+    0 0 22px #a855f766,
+    0 0 46px #a855f733,
+    inset 0 0 24px #a855f71f !important;
+}
+.ticket::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1.5px 1.5px at 14% 22%, #ffffff77 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 16%, #ffffff5c 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 76% 88%, #ffffff5c 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 22% 82%, #ffffff4a 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 8%, #ffffff40 50%, transparent 100%);
+  pointer-events: none;
+}
+.ticket::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -25%;
+  width: 55%;
+  height: 220%;
+  background: linear-gradient(115deg, transparent 42%, #ffffff14 49%, #ffffff28 50%, #ffffff14 51%, transparent 58%);
+  pointer-events: none;
 }
 .ticket .ticket-top {
   display: flex !important;
@@ -74,7 +105,6 @@
   grid-template-columns: none !important;
   margin-bottom: 8px;
   padding-bottom: 0 !important;
-  padding-right: 36px;
   border-bottom: 0 !important;
 }
 .ticket .ticket-label {
@@ -143,30 +173,33 @@
   font-family: 'Unbounded', sans-serif;
 }
 
-/* Control web-only de exportación: pequeño y fuera del PNG */
+/* Botón de descarga: vive AFUERA de la tarjeta, nunca tapa un número */
+.ticket-wrap {
+  max-width: 440px;
+  margin: 0 auto;
+}
+.ticket-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 .ticket-export {
-  position: absolute;
-  top: 7px;
-  right: 8px;
-  z-index: 5;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(226,232,240,.75);
-  background: rgba(16,8,24,.72);
-  color: #eee;
-  font-size: 14px;
-  line-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 2px solid #a855f799;
+  background: linear-gradient(145deg,#2d1846,#160c22);
+  color: #f0e3ff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .2px;
   cursor: pointer;
-  box-shadow: 0 0 9px rgba(168,85,247,.45);
+  box-shadow: 0 0 12px #a855f755;
 }
 .ticket-export:hover {
-  box-shadow: 0 0 13px rgba(168,85,247,.85);
-}
-.ticket.exporting .ticket-export,
-.ticket.is-exporting .ticket-export {
-  display: none !important;
+  box-shadow: 0 0 18px #a855f799;
 }
 
 </style>
@@ -207,7 +240,7 @@ $('rb').onchange=()=>document.querySelectorAll('[data-r]').forEach(r=>r.classLis
 debounceClick($('redeem'),async()=>{let usuario=$('ru').value.trim(),beneficio=$('rb').value;if(!usuario||!beneficio)return toast('Completá usuario y beneficio.',true);try{let d=await api('realizarCanje',{usuario,beneficio});openCard(beneficio==='coupon'?'Cupón generado':'Canje realizado',redeemCard(d,beneficio),d)}catch(e){toast(e.message,true)}});
 function fmtTicket(n){return '#'+String(n??'').replace(/^#/,'').padStart(4,'0')}
 function fmtTickets(a){return (Array.isArray(a)?a:[a]).filter(v=>v!==undefined&&v!==null&&v!=='').map(fmtTicket).join(' · ')||'—'}
-function purchaseCard(d){let puntosLine=d.cuponAplicado?`<div class="compact-line"><b>✓ Cupón 20% aplicado</b><span class="dot"></span><span>Sin puntos esta carga</span></div>`:`<div class="compact-line"><span>Sumaste</span> <b>${Number(d.puntos||0)} pts</b><span class="dot"></span><span>Acumulado</span> <b>${Number(d.puntosAcumulados||0)} pts</b></div>`;return `<div class="ticket"><div class="ticket-top"><span class="ticket-label">TICKET</span><span class="ticket-numbers">${esc(fmtTickets(d.tickets))}</span><button type="button" class="ticket-export" title="Guardar tarjeta en PNG" aria-label="Guardar tarjeta en PNG">⇩</button></div><div class="user">${esc(d.usuario)}</div>${puntosLine}<div class="compact-line"><span>Sumaste</span> <b>${Number(d.participaciones||0)} tickets</b><span class="dot"></span><span>Acumulado</span> <b>${Number(d.participacionesAcumuladas||0)} tickets</b></div><div class="foot">${d.canal==='Telegram'?'PROMO TELEGRAM':'PROMO WHATSAPP'} · ${esc(d.agente||CFG.agente||'Solcito MayuPlay')} · ${esc(d.fechaHora||new Date().toLocaleString('es-AR'))}</div></div>`}
+function purchaseCard(d){let puntosLine=d.cuponAplicado?`<div class="compact-line"><b>✓ Cupón 20% aplicado</b><span class="dot"></span><span>Sin puntos esta carga</span></div>`:`<div class="compact-line"><span>Sumaste</span> <b>${Number(d.puntos||0)} pts</b><span class="dot"></span><span>Acumulado</span> <b>${Number(d.puntosAcumulados||0)} pts</b></div>`;return `<div class="ticket-wrap"><div class="ticket"><div class="ticket-top"><span class="ticket-label">TICKET</span><span class="ticket-numbers">${esc(fmtTickets(d.tickets))}</span></div><div class="user">${esc(d.usuario)}</div>${puntosLine}<div class="compact-line"><span>Sumaste</span> <b>${Number(d.participaciones||0)} tickets</b><span class="dot"></span><span>Acumulado</span> <b>${Number(d.participacionesAcumuladas||0)} tickets</b></div><div class="foot">${d.canal==='Telegram'?'PROMO TELEGRAM':'PROMO WHATSAPP'} · ${esc(d.agente||CFG.agente||'Solcito MayuPlay')} · ${esc(d.fechaHora||new Date().toLocaleString('es-AR'))}</div></div><div class="ticket-actions"><button type="button" class="ticket-export" title="Guardar tarjeta en PNG" aria-label="Guardar tarjeta en PNG">⇩ Guardar tarjeta</button></div></div>`}
 function redeemCard(d,b){let costos=CFG.canje||{1:100,3:275,7:600,coupon:300},cupon=CFG.cupon||{percent:20,min:5000,max:50000};if(b==='coupon')return `<div class="ticket"><div class="big" style="text-align:center">CUPÓN ${cupon.percent}%</div><div class="user">${esc(d.usuario)}</div><div class="line"><span class="lbl">PUNTOS DEBITADOS</span><span class="val"><b>${costos.coupon}</b></span></div><div class="line"><span class="lbl">PUNTOS RESTANTES</span><span class="val">${d.puntosRestantes||0}</span></div><div class="line"><span class="lbl">VÁLIDO</span><span class="val">$ ${Number(cupon.min).toLocaleString('es-AR')} a $ ${Number(cupon.max).toLocaleString('es-AR')}</span></div><div class="line"><span class="lbl">CANJE</span><span class="val">${esc(d.fechaHora)}</span></div><div class="foot">VENCIMIENTO · ${esc(d.cupon?.vencimiento||'')}</div></div>`;return `<div class="ticket"><div class="big" style="text-align:center">TENÉS ${d.participaciones||0} PARTICIPACIÓN${d.participaciones==1?'':'ES'} EXTRA</div><div class="user">${esc(d.usuario)}</div><div class="line"><span class="lbl">TICKETS</span><span class="val big">${fmtTickets(d.tickets)}</span></div><div class="line"><span class="lbl">PUNTOS DEBITADOS</span><span class="val"><b>${costos[b]||0}</b></span></div><div class="line"><span class="lbl">PUNTOS RESTANTES</span><span class="val">${d.puntosRestantes||0}</span></div><div class="foot">CANJE · ${esc(d.fechaHora||'')}</div></div>`}
 let currentCard=null;function openCard(t,html,data){let target=$(t.includes('Canje')||t.includes('Cupón')?'canjesResultado':t.includes('Ganador')?'sorteoResultado':'registroResultado');target.innerHTML='<div class="result-head"><b>'+esc(t)+'</b></div>'+html;target.classList.remove('hide');currentCard={html,data,target};let ticket=target.querySelector('.ticket');let exp=target.querySelector('.ticket-export');if(exp)exp.onclick=()=>savePng(ticket)}
 
