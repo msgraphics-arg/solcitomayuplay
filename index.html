@@ -4,25 +4,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="./Midnight_Bangkok.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="preload" href="./Summer_Days.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Unbounded:wght@500;700;800&display=swap">
 <title>Solcito Mayu Play</title>
 <style>
-@font-face{
-  font-family:'Midnight Bangkok';
-  src:url('./Midnight_Bangkok.ttf') format('truetype');
-  font-style:normal;
-  font-weight:400;
-  font-display:swap;
-}
-@font-face{
-  font-family:'Summer Days';
-  src:url('./Summer_Days.ttf') format('truetype');
-  font-style:normal;
-  font-weight:400;
-  font-display:swap;
-}
 :root{--bg:#07060b;--p:#120e19;--p2:#191320;--l:#bfc0c9;--purple:#a855f7;--purple2:#d8b4fe;--text:#faf8ff;--muted:#aaa3b4;--ok:#76efad;--bad:#ff707c}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#29113e 0,#08070c 38%);color:var(--text);font:14px Inter,Arial,sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}.hide{display:none!important}.login{min-height:100vh;display:grid;place-items:center;padding:20px}.card,.section{border:2px solid #777782;border-radius:20px;background:linear-gradient(145deg,#1b1522,#0b0910);box-shadow:0 0 24px #a855f71a,inset 0 0 25px #fff3;position:relative}.card:after,.section:after{content:"";position:absolute;inset:-2px;border-radius:21px;box-shadow:0 0 16px #a855f74d;animation:p 3.2s ease-in-out infinite;pointer-events:none}@keyframes p{0%,100%{box-shadow:0 0 12px #a855f733}50%{box-shadow:0 0 36px #a855f799}}.loginbox{width:min(420px,100%);padding:32px}.logo{width:76px;height:76px;margin:auto;display:grid;place-items:center;border:2px solid #ddd;border-radius:18px;font-size:48px;font-weight:900;font-style:italic;background:linear-gradient(145deg,#3a3a42,#09090d);text-shadow:0 0 13px #a855f7;box-shadow:0 0 22px #a855f755}.brand{text-align:center;font-size:27px;font-weight:900;margin:18px 0 5px}.brand span{color:var(--purple2)}.sub{text-align:center;color:var(--muted);margin-bottom:25px}label{display:block;font-size:12px;font-weight:800;margin-bottom:7px;color:#ddd8e4}input,select{width:100%;padding:12px 13px;background:#09080d;border:1px solid #504b58;border-radius:11px;color:#fff;outline:0}input:focus,select:focus{border-color:var(--purple2);box-shadow:0 0 0 3px #a855f71f}.field{margin-bottom:14px}.btn{padding:10px 14px;border:2px solid #aaaab4;border-radius:11px;background:linear-gradient(145deg,#28232e,#111017);color:#fff;font-weight:800}.btn:hover{border-color:var(--purple2);box-shadow:0 0 18px #a855f733}.primary{background:linear-gradient(135deg,#7c3aed,#a855f7);border-color:#dfc1ff}.danger{border-color:#93414b;color:#ffb5bc}.err{color:#ff8992;min-height:18px;font-size:12px;font-weight:700}header{position:sticky;top:0;z-index:10;padding:13px 20px;background:#07060be8;backdrop-filter:blur(14px);border-bottom:1px solid #292531}.head{max-width:1400px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px}.hbrand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:19px}.mini{width:44px;height:44px;display:grid;place-items:center;border:2px solid #ccc;border-radius:12px;font-size:29px;font-weight:900;font-style:italic;background:#15151b;box-shadow:0 0 17px #a855f744}.headright{display:flex;align-items:center;gap:10px}.badge{font-size:11px;padding:7px 10px;border-radius:99px;border:1px solid #4c4755;color:var(--muted)}main{max-width:1400px;margin:auto;padding:20px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:17px}.section{grid-column:span 6;padding:19px}.full{grid-column:1/-1}.title{font-size:18px;font-weight:900;margin-bottom:4px}.desc{font-size:12px;color:var(--muted);margin-bottom:17px}.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.channels{display:grid;grid-template-columns:1fr 1fr;gap:7px}.channels input{display:none}.channels label{text-align:center;border:1px solid #4c4755;padding:11px;border-radius:10px;color:var(--muted);cursor:pointer}.channels input:checked+label{color:#fff;border-color:var(--purple2);background:#a855f71f}.status{display:inline-flex;gap:7px;align-items:center;padding:7px 10px;border:1px solid #4a4552;border-radius:99px;font-size:11px}.dot{width:7px;height:7px;border-radius:50%;background:#777}.open .dot{background:var(--ok);box-shadow:0 0 8px var(--ok)}.closed .dot{background:var(--bad);box-shadow:0 0 8px var(--bad)}.suggest{position:absolute;left:0;right:0;top:100%;z-index:30;background:#0d0b12;border:1px solid #4d4856;border-radius:11px;overflow:hidden}.auto{position:relative}.srow{padding:10px 12px;border-bottom:1px solid #28242e;cursor:pointer}.srow:hover{background:#a855f71c}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{padding:12px;border:1px solid #37323f;border-radius:11px;background:#0a0910}.stat span{display:block;color:var(--muted);font-size:10px}.stat b{display:block;font-size:20px;margin-top:3px}.rules{width:100%;border-collapse:collapse;font-size:12px}.rules td,.rules th{padding:8px;border-bottom:1px solid #2d2934;text-align:left}.rules th{font-weight:800}.rules tr.sel{background:#a855f71f;box-shadow:inset 3px 0 var(--purple2)}.modalbg{position:fixed;inset:0;z-index:50;background:#000b;display:grid;place-items:center;padding:18px}.modal{width:min(760px,100%);max-height:90vh;overflow:auto;padding:20px}.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.ticket{border:2px solid #e7e7ef;border-radius:15px;padding:12px 17px;background:linear-gradient(115deg,#21102d,#4a1765 48%,#17111d);box-shadow:0 0 12px #d8b4fe55,0 0 28px #a855f744,inset 0 0 18px #ffffff12;position:relative;overflow:hidden}.line{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #fff2}.line:last-child{border:0}.lbl{font-size:10px;color:#c8bdd0}.val{font-weight:800;text-align:right}.big{font-size:25px;font-weight:900;color:#e3c1ff}.user{font-size:22px;font-weight:900;margin:5px 0 4px;text-align:center}.foot{text-align:center;font-size:10px;color:#d6cbdc;margin-top:8px}.toast{position:fixed;right:18px;bottom:18px;z-index:100;padding:12px 14px;border:1px solid #55505e;border-radius:11px;background:#121017;box-shadow:0 12px 35px #0009}.win{padding:13px;border:1px solid #393441;border-radius:11px;background:#0a0910;margin-bottom:8px}.win b{font-size:17px}@media(max-width:900px){.section{grid-column:1/-1}.cols{grid-template-columns:1fr}.headright .badge{display:none}}@media(max-width:520px){main{padding:12px}.section{padding:15px}.stats{grid-template-columns:1fr}.hbrand{font-size:15px}}
 .navbar{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:8px 0 12px;margin:0 0 14px;position:sticky;top:70px;z-index:8;background:#07060be8;backdrop-filter:blur(12px)}.navbar::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;padding:9px 12px;border:1px solid #4e4858;border-radius:11px;background:#0e0b13;color:#ddd6e5;font-size:11px;font-weight:800;white-space:nowrap}.navbtn:hover,.navbtn.active{border-color:var(--purple2);color:#fff;box-shadow:0 0 16px #a855f744;background:#a855f714}.recent-list{display:grid;gap:8px}.recent-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px;border:1px solid #393441;border-radius:11px;background:#0a0910}.recent-ticket{font-size:18px;font-weight:900;color:#d8b4fe}.recent-user{font-weight:800}.recent-meta{font-size:10px;color:var(--muted);text-align:right}.compact-line{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12px;margin:5px 0}.compact-line .strong{font-weight:900;color:#fff}.divider{color:#c7a4ff;font-weight:900}.ticket .ticket-numbers{font-size:19px;font-weight:900;color:#e6c9ff;letter-spacing:.15px} @media(max-width:520px){.navbar{top:64px}.navbtn{padding:8px 10px;font-size:10px}.navbtn span{display:none}.navbtn{font-size:16px}.recent-item{align-items:flex-start}.recent-meta{text-align:right}}.card-result{margin-top:12px}.result-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.result-head b{font-size:13px}.ticket-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.ticket-actions .btn{padding:9px 12px;font-size:12px}.ticket .ticket-top{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid #fff2}.ticket .ticket-label{text-align:left;font-size:10px;font-weight:800;color:#c8bdd0;letter-spacing:.8px}.ticket .ticket-numbers{min-width:0;text-align:center;white-space:nowrap;font-size:21px;font-weight:900;color:#d8b4fe;letter-spacing:.2px}.ticket .compact-line{justify-content:flex-start;gap:7px;white-space:nowrap}.ticket .compact-line .accum{font-weight:500;color:#eee8f2}.ticket .arrow{color:#d8b4fe;font-weight:900}.ticket .user{text-align:left}.ticket .foot{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media(max-width:520px){.ticket{padding:13px 14px}.ticket .ticket-top{grid-template-columns:58px 1fr;gap:5px}.ticket .ticket-numbers{font-size:19px}.ticket .compact-line{font-size:11px;gap:5px}.ticket .user{font-size:20px}}
 /* Identidad visual: Unbounded para marca y números, Inter para el resto */
@@ -43,23 +27,23 @@
 }
 
 .brand {
-  font-family:'Midnight Bangkok', 'Unbounded', sans-serif;
-  font-weight:400;
-  font-size:34px;
-  letter-spacing:.5px;
+  font-family:'Unbounded', sans-serif;
+  font-weight:700;
+  font-size:26px;
+  letter-spacing:.3px;
 }
 
 .title {
-  font-family:'Summer Days', 'Unbounded', sans-serif;
-  font-weight:400;
-  font-size:21px;
+  font-family:'Unbounded', sans-serif;
+  font-weight:700;
+  font-size:17px;
   letter-spacing:.3px;
 }
 
 .hbrand {
-  font-family:'Midnight Bangkok', 'Unbounded', sans-serif;
-  font-weight:400;
-  font-size:22px;
+  font-family:'Unbounded', sans-serif;
+  font-weight:700;
+  font-size:18px;
 }
 
 .mini {
@@ -109,9 +93,9 @@
   text-align: right !important;
 }
 .ticket .user {
-  font-family: 'Summer Days', 'Unbounded', sans-serif !important;
-  font-size: 23px !important;
-  font-weight: 400 !important;
+  font-family: 'Unbounded', sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
   text-align: center !important;
   margin: 2px 0 12px !important;
   color: #fff;
